@@ -1,0 +1,29 @@
+<ion-view hide-nav-bar="true">
+  <ion-content has-header="false">
+    <div class="list">
+    	<img src="img/ionic.png" style="height: 120px; margin: 50px 0 0 90px;">
+
+      <label class="item item-input spacing-login">
+        <input type="text" placeholder="E-mail" ng-model="user.email" style="font-size: 15px !important;">
+      </label>
+
+      <label class="item item-input spacing-login">
+        <input type="text" placeholder="Password" ng-model="user.password" style="font-size: 15px !important;">
+        <!-- <input ng-model="newUser.firstName" type="text"> -->
+      </label>
+
+      <button class="button button-block button-balanced" ng-click="SignIn()">Login</button>
+      
+    </div>      
+
+  <!--   <div class="button-bar">
+      <button class="button button-balanced" ng-click="createContact(newUser)">Forgot My Password</button>
+      <button class="button button-balanced" ng-click="createContact(newUser)">Register</button>
+    </div> -->
+
+    <div class="bar bar-footer bar-light">
+      <button class="button button-large button-balanced" ng-click="createContact(newUser)">Forgot My Password</button>
+      <a class="button button-large button-balanced" href="#/register">Register</a>
+    </div>
+  </ion-content>
+</ion-view>

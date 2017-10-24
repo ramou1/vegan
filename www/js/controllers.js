@@ -1,0 +1,375 @@
+angular.module('starter.controllers', ['ngCordova'])
+
+.factory('firebaseUser', function() {
+  var user = {};
+   return {
+     getUser: function() {
+       return this.user;
+     },
+     setUser:function(userLogged){
+      this.user = userLogged;
+     }
+   };
+})
+
+.controller('MainCtrl', function($scope, $stateParams, $state) {
+  $state.go('login');
+})
+
+.controller('LoginCtrl', function($scope, $stateParams, $state, firebaseUser) {
+  // StatusBar.hide();
+  $scope.user = {};
+
+  $scope.SignIn = function (){
+    firebase.auth().signInWithEmailAndPassword($scope.user.email, $scope.user.password).then(function(result) {
+      firebaseUser.setUser(result);
+      $state.go("tab.timeline");
+    });
+  }
+})
+
+.controller('RegisterCtrl', function($scope, $stateParams, $state, $window) {
+  $scope.user = {};
+
+  $scope.SignUp = function (){
+
+    firebase.auth().createUserWithEmailAndPassword($scope.user.email,$scope.user.password).then (function(result) {
+      console.log(result.uid);
+
+      result.updateProfile({
+        displayName: $scope.user.name
+      }).then(function() {}, function(error) {
+      });
+
+      var ref = new Firebase("https://vegan-2a7ab.firebaseio.com/users");
+      ref.child(result.uid).set({
+        birthdate: $scope.user.birth
+      })
+
+      $state.go("tab.timeline");
+
+
+   }).catch(function(error){
+      console.log(error);
+      $window.alert(error.message);
+   });
+  }
+})
+
+.controller('TimelineCtrl', function($scope, $ionicModal, $cordovaCamera, $state, $timeout, firebaseUser) {
+  $timeout(function(){
+    if(!firebase.auth().currentUser){
+      $state.go("login");
+    }
+    $scope.user = firebaseUser.getUser();
+    console.log(firebase.auth().currentUser);
+  }, 0);
+  console.log(firebaseUser.getUser());
+
+  $scope.title = 'modal';
+  $scope.test =  [{'nome': 'Rafael'},{'nome': 'Ramon'}];
+  $ionicModal.fromTemplateUrl('templates/modal-timeline.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+  $scope.openModal = function() {
+    $scope.modal.show();
+  };
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+  };
+  // Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
+  });
+  // Execute action on hide modal
+  $scope.$on('modal.hidden', function() {
+    // Execute action
+  });
+  // Execute action on remove modal
+  $scope.$on('modal.removed', function() {
+    // Execute action
+  });
+
+  $scope.takePhoto = function () {
+    var options = {
+      quality: 80,
+      destinationType: Camera.DestinationType.DATA_URL,
+      sourceType: Camera.PictureSourceType.CAMERA,
+      allowEdit: true,
+      encodingType: Camera.EncodingType.JPEG,
+      targetWidth: 400,
+      targetHeight: 400,
+      popoverOptions: CameraPopoverOptions,
+      saveToPhotoAlbum: false
+  };
+  $cordovaCamera.getPicture(options).then(function (imageData) {
+        $scope.imgURI = "data:image/jpeg;base64," + imageData;
+
+        // saveToFirebase($scope.imgURI);
+    }, function (err) {
+        // An error occured. Show a message to the user
+    });
+  }
+  
+  $scope.choosePhoto = function () {
+    var options = {
+      quality: 80,
+      destinationType: Camera.DestinationType.DATA_URL,
+      sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+      allowEdit: true,
+      encodingType: Camera.EncodingType.JPEG,
+      targetWidth: 400,
+      targetHeight: 400,
+      popoverOptions: CameraPopoverOptions,
+      saveToPhotoAlbum: false
+  };
+
+      $cordovaCamera.getPicture(options).then(function (imageData) {
+          $scope.imgURI = "data:image/jpeg;base64," + imageData;
+      }, function (err) {
+          // An error occured. Show a message to the user
+      });
+  }
+})
+
+.controller('ChatsCtrl', function($scope, Chats) {
+  // With the new view caching in Ionic, Controllers are only called
+  // when they are recreated or on app start, instead of every page change.
+  // To listen for when this page is active (for example, to refresh data),
+  // listen for the $ionicView.enter event:
+  //
+  //$scope.$on('$ionicView.enter', function(e) {
+  //});
+
+  $scope.chats = Chats.all();
+  $scope.remove = function(chat) {
+    Chats.remove(chat);
+  };
+})
+
+.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
+  $scope.chat = Chats.get($stateParams.chatId);
+})
+
+.controller('RecipesCtrl', function($scope, $ionicModal, $cordovaCamera) {
+  $scope.settings = {
+    enableFriends: true
+  };
+     $ionicModal.fromTemplateUrl('templates/modal-recipes.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+  $scope.openModal = function() {
+    $scope.modal.show();
+  };
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+  };
+  // Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
+  });
+  // Execute action on hide modal
+  $scope.$on('modal.hidden', function() {
+    // Execute action
+  });
+  // Execute action on remove modal
+  $scope.$on('modal.removed', function() {
+    // Execute action
+  });
+
+  $scope.takePhoto = function () {
+    var options = {
+      quality: 80,
+      destinationType: Camera.DestinationType.DATA_URL,
+      sourceType: Camera.PictureSourceType.CAMERA,
+      allowEdit: true,
+      encodingType: Camera.EncodingType.JPEG,
+      targetWidth: 400,
+      targetHeight: 400,
+      popoverOptions: CameraPopoverOptions,
+      saveToPhotoAlbum: false
+  };
+  $cordovaCamera.getPicture(options).then(function (imageData) {
+        $scope.imgURI = "data:image/jpeg;base64," + imageData;
+    }, function (err) {
+        // An error occured. Show a message to the user
+    });
+  }
+  
+  $scope.choosePhoto = function () {
+    var options = {
+      quality: 80,
+      destinationType: Camera.DestinationType.DATA_URL,
+      sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+      allowEdit: true,
+      encodingType: Camera.EncodingType.JPEG,
+      targetWidth: 400,
+      targetHeight: 400,
+      popoverOptions: CameraPopoverOptions,
+      saveToPhotoAlbum: false
+  };
+
+      $cordovaCamera.getPicture(options).then(function (imageData) {
+          $scope.imgURI = "data:image/jpeg;base64," + imageData;
+      }, function (err) {
+          // An error occured. Show a message to the user
+      });
+  }
+})
+
+.controller('ProfileCtrl', function($scope, $stateParams, $cordovaCamera, $ionicModal) {
+  $scope.test = [{'nome': 'Rafael'},{'nome': 'Ramon'}];
+
+ $ionicModal.fromTemplateUrl('templates/modal-settings.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+  $scope.openModal = function() {
+    $scope.modal.show();
+  };
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+  };
+  // Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
+  });
+  // Execute action on hide modal
+  $scope.$on('modal.hidden', function() {
+    // Execute action
+  });
+  // Execute action on remove modal
+  $scope.$on('modal.removed', function() {
+    // Execute action
+  });
+
+  $scope.takePhoto = function () {
+    var options = {
+      quality: 80,
+      destinationType: Camera.DestinationType.DATA_URL,
+      sourceType: Camera.PictureSourceType.CAMERA,
+      allowEdit: true,
+      encodingType: Camera.EncodingType.JPEG,
+      targetWidth: 400,
+      targetHeight: 400,
+      popoverOptions: CameraPopoverOptions,
+      saveToPhotoAlbum: false
+  };
+  $cordovaCamera.getPicture(options).then(function (imageData) {
+        $scope.imgURI = "data:image/jpeg;base64," + imageData;
+    }, function (err) {
+        // An error occured. Show a message to the user
+    });
+  }
+  $scope.choosePhoto = function () {
+    var options = {
+      quality: 80,
+      destinationType: Camera.DestinationType.DATA_URL,
+      sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+      allowEdit: true,
+      encodingType: Camera.EncodingType.JPEG,
+      targetWidth: 400,
+      targetHeight: 400,
+      popoverOptions: CameraPopoverOptions,
+      saveToPhotoAlbum: false
+  };
+
+      $cordovaCamera.getPicture(options).then(function (imageData) {
+          $scope.imgURI = "data:image/jpeg;base64," + imageData;
+      }, function (err) {
+          // An error occured. Show a message to the user
+      });
+  }
+})
+
+.controller('EventsCtrl', function($scope, $ionicModal, $cordovaCamera) {
+  $scope.settings = {
+    enableFriends: true
+  };
+  $ionicModal.fromTemplateUrl('templates/modal-events.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+  $scope.openModal = function() {
+    $scope.modal.show();
+  };
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+  };
+  // Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
+  });
+  // Execute action on hide modal
+  $scope.$on('modal.hidden', function() {
+    // Execute action
+  });
+  // Execute action on remove modal
+  $scope.$on('modal.removed', function() {
+    // Execute action
+  });
+  
+  $scope.choosePhoto = function () {
+    var options = {
+      quality: 80,
+      destinationType: Camera.DestinationType.DATA_URL,
+      sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+      allowEdit: true,
+      encodingType: Camera.EncodingType.JPEG,
+      targetWidth: 400,
+      targetHeight: 400,
+      popoverOptions: CameraPopoverOptions,
+      saveToPhotoAlbum: false
+  };
+
+      $cordovaCamera.getPicture(options).then(function (imageData) {
+          $scope.imgURI = "data:image/jpeg;base64," + imageData;
+      }, function (err) {
+          // An error occured. Show a message to the user
+      });
+  }
+})
+/*
+.controller('RestaurantsCtrl', function($scope) {
+  $scope.settings = {
+    enableFriends: true
+  };
+})
+;*/
+
+.controller('RestaurantsCtrl', function($scope, $ionicLoading) {
+
+    google.maps.event.addDomListener(window, 'load', function() {
+        var myLatlng = new google.maps.LatLng(37.3000, -120.4833);
+
+        var mapOptions = {
+            center: myLatlng,
+            zoom: 16,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+        navigator.geolocation.getCurrentPosition(function(pos) {
+            map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+            var myLocation = new google.maps.Marker({
+                position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
+                map: map,
+                title: "My Location"
+            });
+        });
+        $scope.map = map;
+    });
+});
+
+

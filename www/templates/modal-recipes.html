@@ -1,0 +1,38 @@
+<ion-modal-view class="scroll">
+    <ion-header-bar class="bar-light">
+      <!-- <h1 class="title">{{title}}</h1> -->
+       <button class="button ion-close button-clear button-dark" ng-click="modal.hide()"> Cancel</button>
+    </ion-header-bar>
+    <ion-content>
+
+      <div class="list">
+
+        <label class="item item-input">
+          <input type="text" placeholder="Title">
+        </label>
+
+        <label class="item item-input">
+          <textarea placeholder="Ingredients" rows="7" cols="10"></textarea>
+          <!-- <input ng-model="newUser.firstName" type="text"> -->
+        </label>
+
+        <label class="item item-input">
+          <textarea placeholder="Directions" rows="9" cols="10"></textarea>
+        </label>
+
+        <label class="item item-input">
+          <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="text-align: center">
+          <!--             <img src="http://www.capafacebook.com.br/wp-content/uploads/2017/02/capa-facebook-cover-lua-moon.jpg" style="height: 100px;"> -->
+        </label>
+
+       <!--  <button class="button button-full button-positive" ng-click="createContact(newUser)">Create</button> -->
+      </div>      
+
+    </ion-content>
+
+    <div class="bar bar-footer bar-light">
+        <button class="button button-clear icon-left ion-image" ng-click="choosePhoto()"></button>
+        <button class="button button-clear icon-left ion-camera" ng-click="takePhoto()"></button>
+        <button class="button button-outline button-positive">New Recipe</button>
+      </div>
+ </ion-modal-view>

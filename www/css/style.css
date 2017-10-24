@@ -1,0 +1,96 @@
+/*
+.bar.bar-custom {
+    border-color: #f40428;
+    background-color: #f40428;
+    background-image: linear-gradient(0deg, #f40428, #f40428 50%, transparent 50%);
+    color: #fff; 
+}*/
+
+
+h2:link, p:link
+{ 
+ text-decoration:none; 
+}
+
+.scroll-content {
+  /*#7BB156, #027E83*/
+  background: -webkit-linear-gradient( rgba(123,177,86,0.6), rgba(2,126,131,0.6)) !important;
+}
+
+.btn {
+	background-color: transparent;
+	border: transparent;
+}
+
+
+.spacing-top {
+  margin-top: 12px !important;
+}
+
+.spacing-bottom {
+  margin-bottom: 12px !important;
+}
+
+.spacing-login {
+  margin: 5px 30px 0 30px;
+}
+
+.item-avatar  {     
+width:100% !important;  
+height : 100% !important;  
+max-width: 800px !important;
+max-height: 800px !important;
+}
+
+//Mapa
+.scroll {
+    height: 100%;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+.platform-android .bar-subheader.has-tabs-top{
+top:93px !important;
+}
+
+.platform-android .has-subheader.has-tabs-top{
+top:137px;
+}
+
+textarea, input[type="text"], input[type="date"] {
+max-width: 100%;
+width: 100%;
+/*height: 80vh;*/
+font-size: 22px;
+margin-top: 10px;
+line-height: 25px;
+}
+
+/*.top-44  .tab-nav{
+  height: 20px;
+  top:20px !important;
+ }
+
+.tab-item-active{
+  background:green;
+}*/
+
+.tab-item .icon {
+  font-size: 25px !important;
+}
+
+/*.item-avatar > img:first-child{
+  max-width: 70px !important;
+  max-height: 70px !important;
+}*/
+
+hr {
+    width: 75%;
+}
+
+.list-inset {
+  background-color: transparent !important;
+}

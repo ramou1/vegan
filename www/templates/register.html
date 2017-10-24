@@ -1,0 +1,39 @@
+<ion-view view-title="Register">
+    <ion-content>
+      <div class="list list-inset">
+      	<img src="img/ionic.png" style="height: 100px; margin: 10px 0 0 100px;">
+
+        <label class="item item-input">
+          <input type="text" placeholder="Name" ng-model="user.name" style="font-size: 15px !important;">
+        </label>
+
+        <label class="item item-input">
+          <input type="text" placeholder="E-mail" ng-model="user.email" style="font-size: 15px !important;">
+        </label>
+
+        <label class="item item-input">
+          <input type="text" placeholder="Password" ng-model="user.password" style="font-size: 15px !important;">
+          <!-- <input ng-model="newUser.firstName" type="text"> -->
+        </label>
+
+        <label class="item item-input">
+          <input placeholder="Birthdate" class="textbox-n" ng-model="user.birth" type="text" onfocus="(this.type='date')" id="date" style="font-size: 15px !important;"> 
+          <!-- <input type="date"> -->
+        </label>
+
+        <button class="button button-block button-balanced" ng-click="SignUp()">Create</button>
+        
+      </div>      
+
+    <!--   <div class="button-bar">
+        <button class="button button-balanced" ng-click="createContact(newUser)">Forgot My Password</button>
+        <button class="button button-balanced" ng-click="createContact(newUser)">Register</button>
+      </div> -->
+
+<!--       <div class="bar bar-footer bar-light">
+        <button class="button button-large button-balanced" ng-click="createContact(newUser)">Forgot My Password</button>
+        <button class="button button-large button-balanced" ng-click="createContact(newUser)">Register</button>
+      </div>
+ -->
+    </ion-content>
+ </ion-view>

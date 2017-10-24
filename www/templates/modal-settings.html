@@ -1,0 +1,74 @@
+<ion-modal-view class="scroll">
+    <ion-header-bar class="bar-light">
+      <!-- <h1 class="title">{{title}}</h1> -->
+       <button class="button ion-arrow-left-c button-clear button-dark" ng-click="modal.hide()"> Back</button>
+
+       <button class="button button-outline button-positive">Save</button>
+    </ion-header-bar>
+    <ion-content>
+
+
+   <!--  <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="text-align: center"> -->
+
+    <div class="list">
+
+    <div class="item item-divider" style="text-align: center; background-color: #e8e8e8">
+      My Profile
+    </div>
+
+    <label class="item item-input">
+      <input type="text" placeholder="Name"" style="font-size: 15px !important;">
+    </label>
+
+    <label class="item item-input">
+        <input type="text" placeholder="E-mail" style="font-size: 15px !important;">
+    </label>
+
+    <label class="item item-input">
+      <textarea placeholder="Description" rows="5"" style="font-size: 15px !important;"></textarea>
+    </label>
+
+    <div class="item item-divider" style="text-align: center; background-color: #e8e8e8">
+      Profile Image
+    </div>
+
+    <a class="item item-icon-left" href="">
+      <i class="icon ion-image" onClick="choosePhoto()"></i>
+      Choose Photo
+    </a>
+
+    <a class="item item-icon-left" href="">
+      <i class="icon ion-camera" onClick="takePhoto()"></i>
+      Take Photo
+    </a>
+
+
+    <div class="item item-divider" style="text-align: center; background-color: #e8e8e8">
+    </div>
+
+    <div class="list">
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Language
+        </div>
+        <select>
+          <option selected>English</option>
+          <option>Español</option>
+          <option>Português</option>
+        </select>
+      </label>
+    </div>
+
+    <a class="item" href="#">
+      Terms of Use
+    </a>
+    
+    <a class="item" href="#">
+      Exit
+    </a>
+
+    </div>
+
+    </ion-content>
+
+ </ion-modal-view>
