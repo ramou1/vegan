@@ -7,13 +7,13 @@
 
       <div class="list">
         <label class="item item-input">
-          <textarea placeholder="Say Something..." rows="18" cols="1"></textarea>
+          <textarea placeholder="Say Something..." ng-model="post.description" rows="18" cols="1"></textarea>
           <!-- <input ng-model="newUser.firstName" type="text"> -->
         </label>
 
         <label class="item item-input">
-          <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="text-align: center">
-          <!--             <img src="http://www.capafacebook.com.br/wp-content/uploads/2017/02/capa-facebook-cover-lua-moon.jpg" style="height: 100px;"> -->
+          <img ng-src="{{post.image}}" style="text-align: center height: 100px;">
+          <!--             <img src="http://www.capafacebook.com.br/wp-content/uploads/2017/02/capa-facebook-cover-lua-moon.jpg"> -->
         </label>
 
        <!--  <button class="button button-full button-positive" ng-click="createContact(newUser)">Create</button> -->
@@ -24,7 +24,7 @@
       <div class="bar bar-footer bar-light">
         <button class="button button-clear icon-left ion-image" ng-click="choosePhoto()"></button>
         <button class="button button-clear icon-left ion-camera" ng-click="takePhoto()"></button>
-        <button class="button button-outline button-positive">New Post</button>
+        <button class="button button-outline button-positive" ng-click="newPost()">New Post</button>
       </div>
 
  </ion-modal-view>
