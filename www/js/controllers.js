@@ -24,7 +24,7 @@ angular.module('starter.controllers', ['ngCordova'])
     }
   }
 })
-.controller('MainCtrl', function($scope, $stateParams, $state, Auth, $firebaseArray, UserFirebase) {
+.controller('MainCtrl', function($scope, $stateParams, $state, Auth, $firebaseArray, UserFirebase, $ionicLoading, $ionicPopup, $timeout) {
   $scope.firebaseUser = {};
   $scope.auth = Auth;
   $scope.auth.$onAuthStateChanged(function(firebaseUser) {
@@ -35,14 +35,20 @@ angular.module('starter.controllers', ['ngCordova'])
     }else{
       $state.go("tab.timeline");
     }
-    $scope.myPosts = UserFirebase.userDatabase($scope.firebaseUser.uid);
-    console.log($scope.myPosts);
-    console.log($scope.firebaseUser);
-    // $scope.refDatabaseUser = firebase.database().ref().child($scope.firebaseUser.uid);
-    // $scope.refDatabaseObj = $firebaseArray($scope.refStorage);
-    // $Scope.refStorageUser = firebase.storage().ref("userPosts/"+$scope.firebaseUser.uid);
-    // $scope.refStorageUserObj = $firebaseStorage($Scope.refStorageUser);
-    // $scope.refStoragePostSingle = $firebaseArray(firebase.database().ref().child($scope.firebaseUser.uid));
+    $ionicLoading.show();
+    $timeout(function(){
+      var posts = UserFirebase.userDatabase($scope.firebaseUser.uid);
+      $scope.myPosts = posts
+      posts.$loaded(function(data) {
+        $ionicLoading.hide();
+      },
+      function(error) {
+        $ionicPopup.alert({
+          title: 'Opss....',
+          template: error.message
+        });
+      })
+    },0);
     console.log("inside the main controller");
   });
   
@@ -57,7 +63,7 @@ angular.module('starter.controllers', ['ngCordova'])
   }
 })
 
-.controller('RegisterCtrl', function($scope, $stateParams, $state, $window, Auth) {
+.controller('RegisterCtrl', function($scope, $stateParams, $state, $window, Auth, $ionicPopup) {
   $scope.user = {};
 
   $scope.SignUp = function (){
@@ -70,12 +76,15 @@ angular.module('starter.controllers', ['ngCordova'])
       });
       $state.go("tab.timeline");
     }).catch(function(error) {
-      $window.alert(error.message);
+      $ionicPopup.alert({
+         title: 'Opss....',
+         template: error.message
+       });
     });
   }
 })
 
-.controller('TimelineCtrl', function($scope, $ionicModal, $cordovaCamera, $state, $timeout, UserFirebase, $firebaseObject) {
+.controller('TimelineCtrl', function($scope, $ionicModal, $cordovaCamera, $state, $timeout, UserFirebase, $firebaseObject, $ionicPopup) {
   $scope.title = 'modal';
   $scope.post = {};
   $scope.test =  [{'nome': 'Rafael'},{'nome': 'Ramon'}];
@@ -148,6 +157,8 @@ angular.module('starter.controllers', ['ngCordova'])
   }
   $scope.newPost = function(){
     var obj = {};
+    var post = $scope.post;
+
     UserFirebase.userDatabase($scope.firebaseUser.uid).$add({}).then(function(result){
       obj = $firebaseObject(UserFirebase.userDatabaseRef($scope.firebaseUser.uid).child(result.key));
       obj.description = $scope.post.description || '';
@@ -168,11 +179,18 @@ angular.module('starter.controllers', ['ngCordova'])
           });
         });
       }
-
-       $scope.modal.hide();
-    }, function(error) {
-      console.log(error);
-    });
+        var alertPopup = $ionicPopup.alert({
+          title: 'Sucesso!',
+          template: "Post Criado com Sucesso."
+        });
+        alertPopup.then(function(res) {
+          $scope.closeModal();
+          $scope.post = {};
+        }, function(error) {
+          console.log(error);
+        });
+      });
+       
     
   };
 })

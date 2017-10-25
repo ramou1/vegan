@@ -130,18 +130,4 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
   $urlRouterProvider.otherwise('/');
 // $urlRouterProvider.otherwise('/tab/tab-timeline');
 
-})
-.config(function($httpProvider) {
-  $httpProvider.interceptors.push(function($rootScope) {
-    return {
-      request: function(config) {
-        $rootScope.$broadcast('loading:show')
-        return config
-      },
-      response: function(response) {
-        $rootScope.$broadcast('loading:hide')
-        return response
-      }
-    }
-  })
 });
