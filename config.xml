@@ -91,5 +91,5 @@
         <variable name="CAMERA_USAGE_DESCRIPTION" value=" " />
         <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value=" " />
     </plugin>
-    <engine name="android" spec="~6.3.0" />
+    <engine name="android" spec="~6.2.2" />
 </widget>
