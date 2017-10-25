@@ -29,6 +29,12 @@ angular.module('starter.controllers', ['ngCordova'])
   $scope.auth = Auth;
   $scope.auth.$onAuthStateChanged(function(firebaseUser) {
     $scope.firebaseUser = firebaseUser;
+    console.log(firebaseUser);
+    if(!$scope.firebaseUser){
+      $state.go('login');
+    }else{
+      $state.go("tab.timeline");
+    }
     $scope.myPosts = UserFirebase.userDatabase($scope.firebaseUser.uid);
     console.log($scope.myPosts);
     console.log($scope.firebaseUser);
@@ -39,11 +45,7 @@ angular.module('starter.controllers', ['ngCordova'])
     // $scope.refStoragePostSingle = $firebaseArray(firebase.database().ref().child($scope.firebaseUser.uid));
     console.log("inside the main controller");
   });
-  if(!$scope.firebaseUser){
-    $state.go('login');
-  }else{
-    $state.go("tab.timeline");
-  }
+  
 })
 
 .controller('LoginCtrl', function($scope, $stateParams, $state, Auth) {
@@ -156,7 +158,7 @@ angular.module('starter.controllers', ['ngCordova'])
         console.log("Error:", error);
       });
       if($scope.post.image){
-        var stringUploadTask = UserFirebase.userStorage($scope.firebaseUser.uid).$putString($scope.post.image, 'base64');
+        var stringUploadTask = UserFirebase.userStorage($scope.firebaseUser.uid).$putString($scope.post.image.replace('data:image/jpeg;base64,',''), 'base64');
         stringUploadTask.$complete(function(snapshot) {
           obj.image = snapshot.downloadURL;
           obj.$save().then(function(ref) {
