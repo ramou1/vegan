@@ -169,7 +169,7 @@ angular.module('starter.controllers', ['ngCordova'])
         console.log("Error:", error);
       });
       if($scope.post.image){
-        var stringUploadTask = UserFirebase.userStorage($scope.firebaseUser.uid).$putString($scope.post.image.replace('data:image/jpeg;base64,',''), 'base64');
+        var stringUploadTask = UserFirebase.userStorage($scope.firebaseUser.uid+Date.now()).$putString($scope.post.image.replace('data:image/jpeg;base64,',''), 'base64');
         stringUploadTask.$complete(function(snapshot) {
           obj.image = snapshot.downloadURL;
           obj.$save().then(function(ref) {
