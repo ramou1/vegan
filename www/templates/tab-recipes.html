@@ -1,11 +1,10 @@
 <ion-view>
    <ion-nav-title >
     Recipes
-      <!-- <img src="img/logo.png" width="55" height="35" style="margin-top: 8px;"/> -->
    </ion-nav-title>
   <ion-content>
 
- <a href="#/tab/login" >
+ <!-- <a href="#/tab/login" >
   <div class="list card">
     <div class="item item-image">
         <img src="http://www.seriouseats.com/images/2015/02/20150228-vegan-loaded-queso-dip7.jpg"/>
@@ -16,7 +15,21 @@
         </p>
     </div>
   </div>
-</a>
+</a> -->
+
+  <div class="list card text-center" ng-if="!myRecipes.length">
+    <h4>Não há receitas para exibir</h4>
+  </div>
+  <div class="list card" ng-repeat="recipe in myRecipes | orderBy: '-recipeDate'">
+    <div class="item item-image">
+      <img class="full-image" ng-src="{{recipe.image ? recipe.image : 'http://www.seriouseats.com/images/2015/02/20150228-vegan-loaded-queso-dip7.jpg'}}">
+      <h2 class="spacing-top">{{recipe.title || ''}}</h2> 
+      <p class="spacing-bottom">
+        <button class="subdued button icon-left ion-thumbsup button-clear button-dark" ng-click=""> 1 Like</button>
+        <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openModal()"> 5 Comments</button>
+      </p>
+    </div>
+  </div>
 
       
   </ion-content>

@@ -1,7 +1,6 @@
 <ion-view>
    <ion-nav-title >
     Timeline
-      <!-- <img src="img/logo.png" width="55" height="35" style="margin-top: 8px;"/> -->
    </ion-nav-title>
   <ion-content>
  <!-- <ion-content class="padding">
@@ -46,14 +45,15 @@
       </div>
     </div> -->
   <!--</p>-->
-  <div class="list card text-center"  ng-if="!myPosts.length">
-    <h1>Não possui Posts para exibir</h1>
+  <div class="list card text-center" ng-if="!myPosts.length">
+    <h4>Não há posts para exibir</h4>
   </div>
   <div class="list card" ng-repeat="post in myPosts | orderBy: '-postDate'">
     <div class="item item-avatar">
       <img src="http://www.crustys.com/wp-content/uploads/2017/01/vegan.jpg">
-      <h2>{{firebaseUser.displayName || 'Usuario sem Nome'}}</h2>
-      <p>{{post.postDate  | date : 'medium'}}</p>
+      <h2>{{firebaseUser.displayName || 'Usuário sem Nome'}}</h2>
+      <h4>{{post.postDate  | date : 'HH:mm • d/MM/yy'}}</h4>
+      <!-- <p>{{post.postDate  | date : 'medium'}}</p> -->
     </div>
     <div class="item item-body">
       <img class="full-image" ng-src="{{post.image ? post.image : 'http://babakunyho.eu/img/default-no-image.png'}}">
