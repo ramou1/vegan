@@ -6,43 +6,39 @@ angular.module('starter.controllers', ['ngCordova'])
   }
 ])
 .factory("UserFirebase", function($firebaseArray, $firebaseStorage) {
+  var ref = firebase.database().ref();
   return {
     userDatabaseRef:function(userid){
-      var ref = firebase.database().ref();
       var database = ref.child("users").child(userid).child("posts");
       return database;
-
-      var ref2 = firebase.database().ref();
-      var database2 = ref2.child("users").child(userid).child("recipes");
-      return database2;
     },
     userDatabase: function(userid){
-      var ref = firebase.database().ref();
       var database = ref.child("users").child(userid).child("posts");
       return $firebaseArray(database);
-
-      var ref2 = firebase.database().ref();
-      var database2 = ref2.child("users").child(userid).child("recipes");
-      return $firebaseArray(database2);
     },
     userStorage: function(userid){
-      var ref = firebase.database().ref();
       var storage = firebase.storage().ref("userPosts/"+userid);
       return $firebaseStorage(storage);
-
-      var ref2 = firebase.database().ref();
-      var storage2 = firebase.storage().ref("userRecipes/"+userid);
-      return $firebaseStorage(storage2);
+    },
+    userRecipesDatabaseRef: function(userid){
+      var database = ref.child("users").child(userid).child("recipes");
+      return database;
+    },
+    userRecipesDatabase: function(userid){
+      var database = ref.child("users").child(userid).child("recipes");
+      return $firebaseArray(database);
+    },
+    userRecipeStorage: function(userid){
+      var storage = firebase.storage().ref("userRecipes/"+userid);
+      return $firebaseStorage(storage);
     }
   }
 })
-
 .controller('MainCtrl', function($scope, $stateParams, $state, Auth, $firebaseArray, UserFirebase, $ionicLoading, $ionicPopup, $timeout) {
   $scope.firebaseUser = {};
   $scope.auth = Auth;
   $scope.auth.$onAuthStateChanged(function(firebaseUser) {
     $scope.firebaseUser = firebaseUser;
-    console.log(firebaseUser);
     if(!$scope.firebaseUser){
       $state.go('login');
     }else{
@@ -50,9 +46,9 @@ angular.module('starter.controllers', ['ngCordova'])
     }
     $ionicLoading.show();
     $timeout(function(){
-      var posts = UserFirebase.userDatabase($scope.firebaseUser.uid);
-      $scope.myPosts = posts
-      posts.$loaded(function(data) {
+      $scope.myPosts = UserFirebase.userDatabase($scope.firebaseUser.uid || {});
+      $scope.myRecipes = UserFirebase.userRecipesDatabase($scope.firebaseUser.uid) || {};
+      $scope.myPosts.$loaded(function(data) {
         $ionicLoading.hide();
       },
       function(error) {
@@ -102,7 +98,6 @@ angular.module('starter.controllers', ['ngCordova'])
   $scope.post = {};
   $scope.test =  [{'nome': 'Rafael'},{'nome': 'Ramon'}];
   
-  console.log($scope.myPosts);
   $ionicModal.fromTemplateUrl('templates/modal-timeline.html', {
     scope: $scope,
     animation: 'slide-in-up'
@@ -171,10 +166,9 @@ angular.module('starter.controllers', ['ngCordova'])
   $scope.newPost = function(){
     var obj = {};
     var post = $scope.post;
-
-    UserFirebase.userDatabase($scope.firebaseUser.uid).$add({}).then(function(result){
-      // obj = $firebaseObject(UserFirebase.userDatabaseRef($scope.firebaseUser.uid).child(result.key));
-      obj = $firebaseObject(UserFirebase.userDatabaseRef($scope.firebaseUser.uid).child("posts"));
+    console.log($scope.myPosts);
+    $scope.myPosts.$add({}).then(function(result){
+      obj = $firebaseObject(UserFirebase.userDatabaseRef($scope.firebaseUser.uid).child(result.key));
       obj.description = $scope.post.description || '';
       obj.postDate = Date.now();
       obj.$save().then(function(ref) {
@@ -273,7 +267,7 @@ angular.module('starter.controllers', ['ngCordova'])
       saveToPhotoAlbum: false
   };
   $cordovaCamera.getPicture(options).then(function (imageData) {
-        $scope.imgURI = "data:image/jpeg;base64," + imageData;
+        $scope.recipe.image = "data:image/jpeg;base64," + imageData;
     }, function (err) {
         // An error occured. Show a message to the user
     });
@@ -290,52 +284,49 @@ angular.module('starter.controllers', ['ngCordova'])
       targetHeight: 400,
       popoverOptions: CameraPopoverOptions,
       saveToPhotoAlbum: false
-  };
-
-      $cordovaCamera.getPicture(options).then(function (imageData) {
-          $scope.imgURI = "data:image/jpeg;base64," + imageData;
-      }, function (err) {
-          // An error occured. Show a message to the user
-      });
+    };
+    $cordovaCamera.getPicture(options).then(function (imageData) {
+        $scope.recipe.image = "data:image/jpeg;base64," + imageData;
+    }, function (err) {
+        // An error occured. Show a message to the user
+    });
   }
-    $scope.newRecipe = function(){
+  $scope.newRecipe = function(){
     var obj = {};
     var recipe = $scope.recipe;
-
-    UserFirebase.userDatabase($scope.firebaseUser.uid).$add({}).then(function(result){
-      // obj = $firebaseObject(UserFirebase.userDatabaseRef($scope.firebaseUser.uid).child(result.key));
-      obj = $firebaseObject(UserFirebase.userDatabaseRef($scope.firebaseUser.uid).child("recipes"));
+    UserFirebase.userRecipesDatabase($scope.firebaseUser.uid).$add({}).then(function(result){
+      obj = $firebaseObject(UserFirebase.userRecipesDatabaseRef($scope.firebaseUser.uid).child(result.key));
       obj.title = $scope.recipe.title || '';
       obj.ingredients = $scope.recipe.ingredients || '';
       obj.directions = $scope.recipe.directions || '';
       obj.recipeDate = Date.now();
-      obj.$save().then(function(ref2) {
-        ref2.key === obj.$id; // true
+      obj.$save().then(function(ref) {
+        ref.key === obj.$id; // true
       }, function(error) {
         console.log("Error:", error);
       });
       if($scope.recipe.image){
-        var stringUploadTask = UserFirebase.userStorage($scope.firebaseUser.uid+Date.now()).$putString($scope.recipe.image.replace('data:image/jpeg;base64,',''), 'base64');
+        var stringUploadTask = UserFirebase.userRecipeStorage($scope.firebaseUser.uid+Date.now()).$putString($scope.recipe.image.replace('data:image/jpeg;base64,',''), 'base64');
         stringUploadTask.$complete(function(snapshot) {
           obj.image = snapshot.downloadURL;
-          obj.$save().then(function(ref2) {
-            ref2.key === obj.$id; // true
+          obj.$save().then(function(ref) {
+            ref.key === obj.$id; // true
           }, function(error) {
             console.log("Error:", error);
           });
         });
       }
-        var alertPopup = $ionicPopup.alert({
-          title: 'Sucesso!',
-          template: "Receita Criada com Sucesso."
-        });
-        alertPopup.then(function(res) {
-          $scope.closeModal();
-          $scope.recipe = {};
-        }, function(error) {
-          console.log(error);
-        });
+      var alertPopup = $ionicPopup.alert({
+        title: 'Sucesso!',
+        template: "Receita Criada com Sucesso."
       });
+      alertPopup.then(function(res) {
+        $scope.closeModal();
+        $scope.recipe = {};
+      }, function(error) {
+        console.log(error);
+      });
+    });
   };
 })
 
