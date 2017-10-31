@@ -43,6 +43,7 @@ angular.module('starter.controllers', ['ngCordova'])
       $state.go('login');
     }else{
       $state.go("tab.timeline");
+      $ionicLoading.show();
       $timeout(function(){
       $scope.myPosts = UserFirebase.userDatabase($scope.firebaseUser.uid || {});
       $scope.myRecipes = UserFirebase.userRecipesDatabase($scope.firebaseUser.uid) || {};
@@ -57,7 +58,7 @@ angular.module('starter.controllers', ['ngCordova'])
         })
       },0);
     }
-    $ionicLoading.show();
+    
     
     console.log("inside the main controller");
   });
