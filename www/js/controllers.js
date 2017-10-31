@@ -43,16 +43,9 @@ angular.module('starter.controllers', ['ngCordova'])
       $state.go('login');
     }else{
       $state.go("tab.timeline");
-<<<<<<< HEAD
-    }
     $ionicLoading.show();
     $timeout(function(){
       $scope.myPosts = UserFirebase.userDatabase($scope.firebaseUser.uid) || {};
-=======
-      $ionicLoading.show();
-      $timeout(function(){
-      $scope.myPosts = UserFirebase.userDatabase($scope.firebaseUser.uid || {});
->>>>>>> 59881670851074e69403f90cf5db319d131f4881
       $scope.myRecipes = UserFirebase.userRecipesDatabase($scope.firebaseUser.uid) || {};
       $scope.myPosts.$loaded(function(data) {
         $ionicLoading.hide();
