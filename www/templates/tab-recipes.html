@@ -16,21 +16,22 @@
     </div>
   </div>
 </a> -->
-
+  
+  
   <div class="list card text-center" ng-if="!myRecipes.length">
     <h4>Não há receitas para exibir</h4>
   </div>
-  <div class="list card" ng-repeat="recipe in myRecipes | orderBy: '-recipeDate'">
+<!--   <a href="templates/single-recipe.html"> -->
+  <div class="list card" ng-repeat="recipe in myRecipes | orderBy: '-recipeDate'" >
     <div class="item item-image">
-      <img class="full-image" ng-src="{{recipe.image ? recipe.image : 'http://www.seriouseats.com/images/2015/02/20150228-vegan-loaded-queso-dip7.jpg'}}">
+      <img class="full-image" ng-src="{{recipe.image ? recipe.image : 'http://www.seriouseats.com/images/2015/02/20150228-vegan-loaded-queso-dip7.jpg'}}" ng-click="openRecipe()">
       <h2 class="spacing-top">{{recipe.title || ''}}</h2> 
       <p class="spacing-bottom">
         <button class="subdued button icon-left ion-thumbsup button-clear button-dark" ng-click=""> 1 Like</button>
-        <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openModal()"> 5 Comments</button>
+        <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> 5 Comments</button>
       </p>
     </div>
   </div>
-
       
   </ion-content>
 

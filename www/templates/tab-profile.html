@@ -4,39 +4,24 @@
       Profile
       <button class="button button-clear ion-gear-a" style="margin-top: 1.6%; margin-left: 70%;" ng-click="openModal()"></button>
    </ion-nav-title>
+   
   <ion-content>
-    <!--<p ng-repeat='nome in test'>
-      {{nome.nome}}
-    </p>-->
-      <!--<ion-list>
-        <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/tab/chats/{{chat.id}}">
-          <img ng-src="{{chat.face}}">
-          <h2>{{chat.name}}</h2>
-          <p>{{chat.lastText}}</p>
-          <i class="icon ion-chevron-right icon-accessory"></i>
-
-          <ion-option-button class="button-assertive" ng-click="remove(chat)">
-            Delete
-          </ion-option-button>
-        </ion-item>
-      </ion-list>-->
 
     <div class="list">
       <a class="item item-avatar" style="text-align: center; height: 180px !important;">
-        <img src="img/adam.jpg" style="max-width: 70px !important; max-height: 70px !important;">
-        <h2>Carlos Oliveira</h2>
-        <h4>@carlosoliveira</h4>
+        <img src="img/ben.png" style="max-width: 70px !important; max-height: 70px !important;">
+        <h2>{{firebaseUser.displayName || 'Usuário sem Nome'}}</h2>
         <p>Back off, man. I'm a scientist.</p>
         <hr>
+        <!-- <p style="text-align: center;"><b>FOLLOWING</b><br>
+         0
+        </p> -->
         <p style="text-align: center;"><b>FOLLOWERS</b><br>
          0
         </p>
-        <!-- <a href="#" class="item item-icon">
-          <i class="icon ion-person-stalker"> 100 Friends</i>  
-        </a> -->
       </a>
 
-      <div class="tabs tabs-color-balanced">
+ <!--      <div class="tabs tabs-color-balanced">
         <a class="tab-item active">
           Timeline
         </a>
@@ -46,8 +31,64 @@
         <a class="tab-item">
           Medals
         </a>
-      </div>
-    </div>
+      </div> -->
+
+      
+   </div>
+
+ 
+
+      <ion-tabs class="tabs-clear tabs-icon-top">
+          <ion-tab title="Timeline" icon-on="ion-ios-filing" icon-off="ion-ios-filing-outline">
+          <ion-nav-view name="tab-timeline">
+            <ion-content>
+              <div class="list card text-center" ng-if="!myPosts.length">
+                <h4>Não há posts para exibir</h4>
+              </div>
+              <div class="list card" ng-repeat="post in myPosts | orderBy: '-postDate'">
+                <div class="item item-avatar">
+                  <img src="http://www.crustys.com/wp-content/uploads/2017/01/vegan.jpg">
+                  <h2>{{firebaseUser.displayName || 'Usuário sem Nome'}}</h2>
+                  <h4>{{post.postDate  | date : 'HH:mm • d/MM/yy'}}</h4>
+                </div>
+                <div class="item item-body">
+                  <img class="full-image" ng-src="{{post.image ? post.image : 'http://babakunyho.eu/img/default-no-image.png'}}">
+                  <p>
+                    {{post.description || ''}}
+                  </p>
+                  <p>
+                    <button class="subdued button icon-left ion-thumbsup button-clear button-dark" ng-click=""> 1 Like</button>
+                    <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> 5 Comments</button>
+                  </p>
+                </div>
+              </div>
+            </ion-content>
+          </ion-nav-view>
+        </ion-tab>
+
+
+        <ion-tab title="Recipes" icon-off="ion-android-restaurant" icon-on="ion-android-restaurant">
+          <ion-nav-view name="tab-recipes">
+            <ion-content>
+              <div class="list card text-center" ng-if="!myRecipes.length">
+                <h4>Não há receitas para exibir</h4>
+              </div>
+              <div class="list card" ng-repeat="recipe in myRecipes | orderBy: '-recipeDate'">
+                <div class="item item-image">
+                  <img class="full-image" ng-src="{{recipe.image ? recipe.image : 'http://www.seriouseats.com/images/2015/02/20150228-vegan-loaded-queso-dip7.jpg'}}">
+                  <h2 class="spacing-top">{{recipe.title || ''}}</h2> 
+                  <p class="spacing-bottom">
+                    <button class="subdued button icon-left ion-thumbsup button-clear button-dark" ng-click=""> 1 Like</button>
+                    <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> 5 Comments</button>
+                  </p>
+                </div>
+              </div>
+            </ion-content>
+          </ion-nav-view>
+        </ion-tab>
+
+      </ion-tabs>
+
   </ion-content>
 </ion-view>
 

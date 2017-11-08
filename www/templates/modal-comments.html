@@ -1,57 +1,49 @@
 <ion-modal-view class="scroll">
     <ion-header-bar class="bar-light">
       <!-- <h1 class="title">{{title}}</h1> -->
-       <button class="button ion-arrow-left-c button-clear button-dark" ng-click="modal.hide()"> Back</button>
-
-       <button class="button button-outline button-positive">Save</button>
+       <button class="button ion-arrow-left-c button-clear button-dark" ng-click="modal2.hide()"> Comments</button>
     </ion-header-bar>
-    <ion-content>
+    <ion-content style="background: white !important;">
 
     <div class="list">
-
-    <div class="item item-divider" style="text-align: center; background-color: #e8e8e8">
-      My Profile
+      <a class="item item-avatar" href="#">
+        <img src="img/ben.png">
+        <h2>Venkman</h2>
+        <p>Back off, man. I'm a scientist.</p>
+      </a>
+      <a class="item item-avatar" href="#">
+        <img src="img/ben.png">
+        <h2>Venkman</h2>
+        <p>Back off, man. I'm a scientist.</p>
+      </a>
+      <a class="item item-avatar" href="#">
+        <img src="img/ben.png">
+        <h2>Venkman</h2>
+        <p>Back off, man. I'm a scientist.</p>
+      </a>
+      <a class="item item-avatar" href="#">
+        <img src="img/ben.png">
+        <h2>Venkman</h2>
+        <p>Back off, man. I'm a scientist.</p>
+      </a>
+      <a class="item item-avatar" href="#">
+        <img src="img/ben.png">
+        <h2>Venkman</h2>
+        <p>Back off, man. I'm a scientist.</p>
+      </a>
     </div>
 
-    <label class="item item-input">
-      <input type="text" placeholder="Name"" style="font-size: 15px !important;">
-    </label>
-
-    <label class="item item-input">
-        <input type="text" placeholder="E-mail" style="font-size: 15px !important;">
-    </label>
-
-    <label class="item item-input">
-      <textarea placeholder="Description" rows="5"" style="font-size: 15px !important;"></textarea>
-    </label>
-
-    <div class="item item-divider" style="text-align: center; background-color: #e8e8e8">
-      Profile Image
-    </div>
-
-    <a class="item item-icon-left" href="">
-      <i class="icon ion-image" onClick="choosePhoto()"></i>
-      Choose Photo
-    </a>
-
-    <a class="item item-icon-left" href="">
-      <i class="icon ion-camera" onClick="takePhoto()"></i>
-      Take Photo
-    </a>
-
-    <div class="item item-divider" style="text-align: center; background-color: #e8e8e8">
-    </div>
-
-    <a class="item" href="#">
-      Terms of Use
-    </a>
-    
-    <a class="item" href="#">
-      Exit
-    </a>
-
-    </div>
+      <!-- <div class="list">
+        <label class="item item-input">
+          <textarea placeholder="Say Something..." ng-model="post.description" cols="1"></textarea>
+        </label>
+      </div> -->
 
     </ion-content>
+
+      <div class="bar bar-footer bar-light">
+        <textarea placeholder="Say Something..." style="font-size: 13px; margin-top:0px !important;" ng-model="post.description" rows="1"></textarea>
+        <button class="button button-clear icon-left ion-android-send" ng-click=""></button>
+      </div>
 
  </ion-modal-view>

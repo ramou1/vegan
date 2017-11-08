@@ -31,6 +31,18 @@ angular.module('starter.controllers', ['ngCordova'])
     userRecipeStorage: function(userid){
       var storage = firebase.storage().ref("userRecipes/"+userid);
       return $firebaseStorage(storage);
+    },
+    userEventsDatabaseRef: function(userid){
+      var database = ref.child("users").child(userid).child("events");
+      return database;
+    },
+    userEventsDatabase: function(userid){
+      var database = ref.child("users").child(userid).child("events");
+      return $firebaseArray(database);
+    },
+    userEventStorage: function(userid){
+      var storage = firebase.storage().ref("userEvents/"+userid);
+      return $firebaseStorage(storage);
     }
   }
 })
@@ -47,6 +59,7 @@ angular.module('starter.controllers', ['ngCordova'])
     $timeout(function(){
       $scope.myPosts = UserFirebase.userDatabase($scope.firebaseUser.uid) || {};
       $scope.myRecipes = UserFirebase.userRecipesDatabase($scope.firebaseUser.uid) || {};
+      $scope.myEvents = UserFirebase.userRecipesDatabase($scope.firebaseUser.uid) || {};
       $scope.myPosts.$loaded(function(data) {
         $ionicLoading.hide();
       },
@@ -88,7 +101,7 @@ angular.module('starter.controllers', ['ngCordova'])
       $state.go("tab.timeline");
     }).catch(function(error) {
       $ionicPopup.alert({
-         title: 'Opss....',
+         title: 'Ops...',
          template: error.message
        });
     });
@@ -98,7 +111,6 @@ angular.module('starter.controllers', ['ngCordova'])
 .controller('TimelineCtrl', function($scope, $ionicModal, $cordovaCamera, $state, $timeout, UserFirebase, $firebaseObject, $ionicPopup) {
   $scope.title = 'modal';
   $scope.post = {};
-  $scope.test =  [{'nome': 'Rafael'},{'nome': 'Ramon'}];
   
   $ionicModal.fromTemplateUrl('templates/modal-timeline.html', {
     scope: $scope,
@@ -125,9 +137,34 @@ angular.module('starter.controllers', ['ngCordova'])
     // Execute action
   });
 
+  $ionicModal.fromTemplateUrl('templates/modal-comments.html', {
+  scope: $scope,
+  animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal2 = modal;
+  });
+  $scope.openComments = function() {
+    $scope.modal2.show();
+  };
+  $scope.closeComments = function() {
+    $scope.modal2.hide();
+  };
+  // Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.modal2.remove();
+  });
+  // Execute action on hide modal
+  $scope.$on('modal2.hidden', function() {
+    // Execute action
+  });
+  // Execute action on remove modal
+  $scope.$on('modal2.removed', function() {
+    // Execute action
+  });
+
   $scope.takePhoto = function () {
     var options = {
-      quality: 80,
+      quality: 100,
       destinationType: Camera.DestinationType.DATA_URL,
       sourceType: Camera.PictureSourceType.CAMERA,
       allowEdit: true,
@@ -148,7 +185,7 @@ angular.module('starter.controllers', ['ngCordova'])
   
   $scope.choosePhoto = function () {
     var options = {
-      quality: 80,
+      quality:100,
       destinationType: Camera.DestinationType.DATA_URL,
       sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
       allowEdit: true,
@@ -230,10 +267,10 @@ angular.module('starter.controllers', ['ngCordova'])
 
   $scope.recipe = {};
   console.log($scope.myRecipes);
+  
   $ionicModal.fromTemplateUrl('templates/modal-recipes.html', {
   scope: $scope,
   animation: 'slide-in-up'
-
   }).then(function(modal) {
     $scope.modal = modal;
   });
@@ -256,14 +293,65 @@ angular.module('starter.controllers', ['ngCordova'])
     // Execute action
   });
 
+  $ionicModal.fromTemplateUrl('templates/modal-comments.html', {
+  scope: $scope,
+  animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal2 = modal;
+  });
+  $scope.openComments = function() {
+    $scope.modal2.show();
+  };
+  $scope.closeComments = function() {
+    $scope.modal2.hide();
+  };
+  // Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.modal2.remove();
+  });
+  // Execute action on hide modal
+  $scope.$on('modal2.hidden', function() {
+    // Execute action
+  });
+  // Execute action on remove modal
+  $scope.$on('modal2.removed', function() {
+    // Execute action
+  });
+
+   $ionicModal.fromTemplateUrl('templates/single-recipe.html', {
+  scope: $scope,
+  animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal3 = modal;
+  });
+  $scope.openRecipe = function() {
+    $scope.modal3.show();
+  };
+  $scope.closeRecipe = function() {
+    $scope.modal3.hide();
+  };
+  // Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.modal2.remove();
+  });
+  // Execute action on hide modal
+  $scope.$on('modal3.hidden', function() {
+    // Execute action
+  });
+  // Execute action on remove modal
+  $scope.$on('modal3.removed', function() {
+    // Execute action
+  });
+
+
   $scope.takePhoto = function () {
     var options = {
-      quality: 80,
+      quality: 100,
       destinationType: Camera.DestinationType.DATA_URL,
       sourceType: Camera.PictureSourceType.CAMERA,
       allowEdit: true,
       encodingType: Camera.EncodingType.JPEG,
-      targetWidth: 400,
+      targetWidth: 500,
       targetHeight: 400,
       popoverOptions: CameraPopoverOptions,
       saveToPhotoAlbum: false
@@ -277,7 +365,7 @@ angular.module('starter.controllers', ['ngCordova'])
   
   $scope.choosePhoto = function () {
     var options = {
-      quality: 80,
+      quality: 100,
       destinationType: Camera.DestinationType.DATA_URL,
       sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
       allowEdit: true,
@@ -333,7 +421,6 @@ angular.module('starter.controllers', ['ngCordova'])
 })
 
 .controller('ProfileCtrl', function($scope, $stateParams, $cordovaCamera, $ionicModal) {
-  $scope.test = [{'nome': 'Rafael'},{'nome': 'Ramon'}];
 
  $ionicModal.fromTemplateUrl('templates/modal-settings.html', {
     scope: $scope,
@@ -362,7 +449,7 @@ angular.module('starter.controllers', ['ngCordova'])
 
   $scope.takePhoto = function () {
     var options = {
-      quality: 80,
+      quality: 100,
       destinationType: Camera.DestinationType.DATA_URL,
       sourceType: Camera.PictureSourceType.CAMERA,
       allowEdit: true,
@@ -380,7 +467,7 @@ angular.module('starter.controllers', ['ngCordova'])
   }
   $scope.choosePhoto = function () {
     var options = {
-      quality: 80,
+      quality: 100,
       destinationType: Camera.DestinationType.DATA_URL,
       sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
       allowEdit: true,
@@ -399,10 +486,11 @@ angular.module('starter.controllers', ['ngCordova'])
   }
 })
 
-.controller('EventsCtrl', function($scope, $ionicModal, $cordovaCamera) {
-  $scope.settings = {
-    enableFriends: true
-  };
+.controller('EventsCtrl', function($scope, $ionicModal, $cordovaCamera, $state, $timeout, UserFirebase, $firebaseObject, $ionicPopup) {
+  
+  $scope.event = {};
+  console.log($scope.myEvents);
+
   $ionicModal.fromTemplateUrl('templates/modal-events.html', {
     scope: $scope,
     animation: 'slide-in-up'
@@ -430,13 +518,13 @@ angular.module('starter.controllers', ['ngCordova'])
   
   $scope.choosePhoto = function () {
     var options = {
-      quality: 80,
+      quality: 100,
       destinationType: Camera.DestinationType.DATA_URL,
       sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
       allowEdit: true,
       encodingType: Camera.EncodingType.JPEG,
       targetWidth: 400,
-      targetHeight: 400,
+      targetHeight: 210,
       popoverOptions: CameraPopoverOptions,
       saveToPhotoAlbum: false
   };
@@ -447,17 +535,50 @@ angular.module('starter.controllers', ['ngCordova'])
           // An error occured. Show a message to the user
       });
   }
-})
-/*
-.controller('RestaurantsCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
+
+    $scope.newEvent = function(){
+    var obj = {};
+    var event = $scope.event;
+    console.log($scope.myEvents);
+    // UserFirebase.userEventsDatabase($scope.firebaseUser.uid).$add({}).then(function(result){
+    $scope.myEvents.$add({}).then(function(result){
+      obj = $firebaseObject(UserFirebase.userEventsDatabaseRef($scope.firebaseUser.uid).child(result.key));
+      obj.title = $scope.event.title || '';
+      obj.where = $scope.event.where || '';
+      obj.when = Date.now();
+      obj.description = $scope.event.description || '';
+      obj.$save().then(function(ref) {
+        ref.key === obj.$id; // true
+      }, function(error) {
+        console.log("Error:", error);
+      });
+      if($scope.event.image){
+        var stringUploadTask = UserFirebase.userEventStorage($scope.firebaseUser.uid+Date.now()).$putString($scope.event.image.replace('data:image/jpeg;base64,',''), 'base64');
+        stringUploadTask.$complete(function(snapshot) {
+          obj.image = snapshot.downloadURL;
+          obj.$save().then(function(ref) {
+            ref.key === obj.$id; // true
+          }, function(error) {
+            console.log("Error:", error);
+          });
+        });
+      }
+      var alertPopup = $ionicPopup.alert({
+        title: 'Sucesso!',
+        template: "Evento Criado com Sucesso."
+      });
+      alertPopup.then(function(res) {
+        $scope.closeModal();
+        $scope.event = {};
+      }, function(error) {
+        console.log(error);
+      });
+    });
   };
 })
-;*/
 
 .controller('RestaurantsCtrl', function($scope, $ionicLoading) {
-
+  
     google.maps.event.addDomListener(window, 'load', function() {
         var myLatlng = new google.maps.LatLng(37.3000, -120.4833);
 

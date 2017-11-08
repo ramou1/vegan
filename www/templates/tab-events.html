@@ -1,18 +1,7 @@
 <ion-view>
-
 	<ion-nav-title >
 		Events
-      <!-- <img src="img/logo.png" width="55" height="35" style="margin-top: 8px;"/> -->
    </ion-nav-title>
-
-	<!--<div class="bar bar-subheader bar-dark">
-		<div class="list list-inset">
-		  <label class="item item-input">
-		    <i class="icon ion-search placeholder-icon"></i>
-		    <input type="text" placeholder="Search">
-		  </label>
-		</div>
-	</div>-->
 
   <ion-header-bar class="bar bar-subheader item-input-inset">
           <label class="item-input-wrapper"> 
@@ -21,19 +10,34 @@
   		</label> 
    </ion-header-bar>
 
-
-  <ion-content class="card-background-page padding" has-header="true" has-tabs="true">
-
-
   	<!--<ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
   		<ion-list>
     		<ion-item *ngFor="let item of items">
      			{{ item }}
-    		</ion-item>
-  		</ion-list>-->  	
+    	</ion-item>
+  	</ion-list>--> 
+
+  <ion-content class="card-background-page" has-header="true">
+
+ 	
 
 <!--eventos-->
-<a href="#">
+
+ <div class="list card text-center" ng-if="!myEvents.length">
+    <h4>Não há eventos para exibir</h4>
+  </div>
+  <div class="list card" ng-repeat="event in myEvents | orderBy: '-when'">
+    <div class="item item-image">
+      <img class="full-image" ng-src="{{event.image ? event.image : 'https://scontent.fsjk2-1.fna.fbcdn.net/v/t1.0-9/21687443_485128058528596_1462436235687010864_n.jpg?oh=3f93249bacf629b85f8847f780ba09e5&oe=5A88868A'}}">
+      <h2 class="spacing-top"><b>{{event.title || ''}}</b></h2> 
+      <h4>{{event.when | date : 'd/MM/yy'}}</h4>
+      <p>Onde:{{event.where || ''}}</p> 
+	  <p>Quando:{{event.when || ''}}</p>
+      <p class="subdued spacing-bottom">Confirmed</p>
+    </div>
+  </div>
+
+<!-- <a href="#">
 	<div class="list card">
 		<div class="item item-image">
 		    <img src="https://scontent.fsjk2-1.fna.fbcdn.net/v/t1.0-9/21687443_485128058528596_1462436235687010864_n.jpg?oh=3f93249bacf629b85f8847f780ba09e5&oe=5A88868A"/>
@@ -91,7 +95,7 @@
 		    <p class="spacing-bottom">140 Confirmed</p>
 	  	</div>
 	</div>
-</a>
+</a> -->
 
 <!--fim eventos-->
 

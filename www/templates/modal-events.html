@@ -3,30 +3,30 @@
       <!-- <h1 class="title">{{title}}</h1> -->
        <button class="button ion-close button-clear button-dark" ng-click="modal.hide()"> Cancel</button>
     </ion-header-bar>
-    <ion-content>
+    <ion-content style="background: white !important;">
 
       <div class="list">
 
         <label class="item item-input">
-          <input type="text" placeholder="Title">
+          <input type="text" placeholder="Title" ng-model="event.title">
         </label>
 
         <label class="item item-input">
-          <input type="text" placeholder="Where?">
+          <input type="text" placeholder="Where?" ng-model="event.where">
           <!-- <input ng-model="newUser.firstName" type="text"> -->
         </label>
 
         <label class="item item-input">
-          <input placeholder="When?" class="textbox-n" type="text" onfocus="(this.type='date')" id="date"> 
+          <input placeholder="When?" class="textbox-n" type="text" onfocus="(this.type='date')" id="date"  ng-model="event.when"> 
           <!-- <input type="date"> -->
         </label>
 
         <label class="item item-input">
-          <textarea placeholder="Description" rows="12" cols="10"></textarea>
+          <textarea placeholder="Description" rows="12" cols="10" ng-model="event.description"></textarea>
         </label>
 
         <label class="item item-input">
-          <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="text-align: center">
+          <img  ng-src="{{event.image}}" style="text-align: center">
           <!--             <img src="http://www.capafacebook.com.br/wp-content/uploads/2017/02/capa-facebook-cover-lua-moon.jpg" style="height: 100px;"> -->
         </label>
 
@@ -37,6 +37,6 @@
 
     <div class="bar bar-footer bar-light">
         <button class="button button-clear icon-left ion-image" ng-click="choosePhoto()"></button>
-        <button class="button button-outline button-positive">New Event</button>
+        <button class="button button-outline button-positive"" ng-click="newEvent()">New Event</button>
       </div>
  </ion-modal-view>

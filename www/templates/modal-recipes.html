@@ -3,30 +3,30 @@
       <!-- <h1 class="title">{{title}}</h1> -->
        <button class="button ion-close button-clear button-dark" ng-click="modal.hide()"> Cancel</button>
     </ion-header-bar>
-    <ion-content>
 
-      <div class="list">
+    <ion-content style="background: white !important;">
+      
+        <div class="list">
+          <label class="item item-input">
+            <input type="text" placeholder="Title" ng-model="recipe.title">
+          </label>
 
-        <label class="item item-input">
-          <input type="text" placeholder="Title" ng-model="recipe.title">
-        </label>
+          <label class="item item-input">
+            <textarea placeholder="Ingredients" rows="7" cols="10" ng-model="recipe.ingredients"></textarea>
+            <!-- <input ng-model="newUser.firstName" type="text"> -->
+          </label>
 
-        <label class="item item-input">
-          <textarea placeholder="Ingredients" rows="7" cols="10" ng-model="recipe.ingredients"></textarea>
-          <!-- <input ng-model="newUser.firstName" type="text"> -->
-        </label>
+          <label class="item item-input">
+            <textarea placeholder="Directions" rows="9" cols="10" ng-model="recipe.directions"></textarea>
+          </label>
 
-        <label class="item item-input">
-          <textarea placeholder="Directions" rows="9" cols="10" ng-model="recipe.directions"></textarea>
-        </label>
+          <label class="item item-input">
+            <img ng-src="{{recipe.image}}" style="text-align: center">
+            <!--             <img src="http://www.capafacebook.com.br/wp-content/uploads/2017/02/capa-facebook-cover-lua-moon.jpg" style="height: 100px;"> -->
+          </label>
 
-        <label class="item item-input">
-          <img ng-src="{{recipe.image}}" style="text-align: center">
-          <!--             <img src="http://www.capafacebook.com.br/wp-content/uploads/2017/02/capa-facebook-cover-lua-moon.jpg" style="height: 100px;"> -->
-        </label>
-
-       <!--  <button class="button button-full button-positive" ng-click="createContact(newUser)">Create</button> -->
-      </div>      
+         <!--  <button class="button button-full button-positive" ng-click="createContact(newUser)">Create</button> -->
+        </div> 
 
     </ion-content>
 
