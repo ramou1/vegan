@@ -1,0 +1,25 @@
+<ion-modal-view class="scroll">
+    <ion-header-bar class="bar-light">
+      <button class="button ion-arrow-left-c button-clear button-dark" ng-click="closeEvent()"> Back</button>
+      
+    </ion-header-bar>
+
+    <ion-content style="background: white !important;">
+
+      <div class="item-text-wrap" ng-repeat="event in myEvents | orderBy: '-when'">
+        <div class="item item-image">
+          <img class="full-image" ng-src="{{event.image}}">
+          <h2 class="spacing-top item-divider">{{event.title}}</h2> 
+          <p>{{event.when}}</p> 
+          <p class="spacing-top item-divider">{{event.where}}</p> 
+          <p>{{event.description}}</p>
+        </div>
+      </div>
+
+    </ion-content>
+
+    <div class="bar bar-footer bar-stable">
+      <button class="button button-block button-balanced" ng-click="">Confirm Presence</button>
+    </div>
+
+ </ion-modal-view>

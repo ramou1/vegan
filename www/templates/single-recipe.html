@@ -6,7 +6,27 @@
     </ion-header-bar>
 
     <ion-content style="background: white !important;">
-      <img ng-src="{{recipe.image}}" style="text-align: center">
+
+      <div class="item-text-wrap" ng-repeat="recipe in myRecipes | orderBy: '-recipeDate'" ng-class="{active : isSelected(recipe)}" >
+        <div class="item item-image">
+          <h1 class="spacing-top">{{recipe.title}}</h1> 
+          <img class="full-image" ng-src="{{recipe.image}}">
+          <h2 class="spacing-top item-divider">Ingredients</h2>
+          <p>{{recipe.ingredients}}</p> 
+          <h2 class="spacing-top item-divider">Directions</h2>
+          <p>{{recipe.directions}}</p> 
+          <p class="spacing-bottom">
+            <button class="subdued button icon-left ion-thumbsup button-clear button-dark" ng-click=""> 1 Like</button>
+            <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> 5 Comments</button>
+          </p>
+        </div>
+      </div>
 
     </ion-content>
+
+    <div class="bar bar-footer bar-stable">
+      <textarea placeholder="Say Something..." style="font-size: 15px; margin-top:0px !important;" ng-model="post.description" rows="1"></textarea>
+      <button class="button button-clear icon-left ion-android-send" ng-click=""></button>
+    </div>
+
  </ion-modal-view>

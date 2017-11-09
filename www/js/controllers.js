@@ -343,7 +343,6 @@ angular.module('starter.controllers', ['ngCordova'])
     // Execute action
   });
 
-
   $scope.takePhoto = function () {
     var options = {
       quality: 100,
@@ -516,6 +515,33 @@ angular.module('starter.controllers', ['ngCordova'])
     // Execute action
   });
   
+  
+  $ionicModal.fromTemplateUrl('templates/single-event.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal2 = modal;
+  });
+  $scope.openEvent = function() {
+    $scope.modal2.show();
+  };
+  $scope.closeEvent = function() {
+    $scope.modal2.hide();
+  };
+  // Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.modal2.remove();
+  });
+  // Execute action on hide modal
+  $scope.$on('modal2.hidden', function() {
+    // Execute action
+  });
+  // Execute action on remove modal
+  $scope.$on('modal2.removed', function() {
+    // Execute action
+  });
+
+
   $scope.choosePhoto = function () {
     var options = {
       quality: 100,
