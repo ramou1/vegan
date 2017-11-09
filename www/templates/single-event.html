@@ -6,13 +6,13 @@
 
     <ion-content style="background: white !important;">
 
-      <div class="item-text-wrap" ng-repeat="event in myEvents | orderBy: '-when'">
+      <div class="item-text-wrap">
         <div class="item item-image">
-          <img class="full-image" ng-src="{{event.image}}">
-          <h2 class="spacing-top item-divider">{{event.title}}</h2> 
-          <p>{{event.when}}</p> 
-          <p class="spacing-top item-divider">{{event.where}}</p> 
-          <p>{{event.description}}</p>
+          <img class="full-image" ng-src="{{selectedEvent.image ? selectedEvent.image : 'https://scontent.fsjk2-1.fna.fbcdn.net/v/t1.0-9/21687443_485128058528596_1462436235687010864_n.jpg?oh=3f93249bacf629b85f8847f780ba09e5&oe=5A88868A'}}">
+          <h2 class="spacing-top item-divider">{{selectedEvent.title}}</h2> 
+          <p>{{selectedEvent.when}}</p> 
+          <p class="spacing-top item-divider">{{selectedEvent.where}}</p> 
+          <p>{{selectedEvent.description}}</p>
         </div>
       </div>
 

@@ -23,7 +23,7 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider,$ionicConfigProvider, $urlRouterProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -125,7 +125,7 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
     url: '/',
     controller: 'MainCtrl'
   })
-
+ $ionicConfigProvider.tabs.position('bottom'); 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/');
 // $urlRouterProvider.otherwise('/tab/tab-timeline');

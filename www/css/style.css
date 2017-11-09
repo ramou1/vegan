@@ -5,8 +5,20 @@
     background-image: linear-gradient(0deg, #f40428, #f40428 50%, transparent 50%);
     color: #fff; 
 }*/
-
-
+.menuProfile >li{
+  width: 50%;
+  display: inline-block;
+  text-align: center;
+  height: 100%;
+  vertical-align: middle;
+}
+.liIcons.active {
+    color: #33cd5f;
+    border: 0 solid #33cd5f;
+}
+.liIcons{
+  font-size: 30px;
+}
 h2:link, p:link
 { 
  text-decoration:none; 

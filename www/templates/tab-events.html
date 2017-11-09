@@ -26,7 +26,7 @@
  <div class="list card text-center" ng-if="!myEvents.length">
     <h4>Não há eventos para exibir</h4>
   </div>
-  <div class="list card" ng-repeat="event in myEvents | orderBy: '-when'" ng-click="openEvent()">
+  <div class="list card" ng-repeat="event in myEvents | orderBy: '-when'" ng-click="openEvent(event)">
     <div class="item item-image">
       <img class="full-image" ng-src="{{event.image ? event.image : 'https://scontent.fsjk2-1.fna.fbcdn.net/v/t1.0-9/21687443_485128058528596_1462436235687010864_n.jpg?oh=3f93249bacf629b85f8847f780ba09e5&oe=5A88868A'}}">
       <h2 class="spacing-top"><b>{{event.title || ''}}</b></h2> 

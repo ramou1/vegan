@@ -1,130 +1,155 @@
 <ion-view>
-   <ion-nav-title >
-      <!-- <img src="img/logo.png" width="55" height="35" style="margin: 0 70% 0 8px;"/> -->
-      Profile
-      <button class="button button-clear ion-gear-a" style="margin-top: 1.6%; margin-left: 70%;" ng-click="openModal()"></button>
-   </ion-nav-title>
-   
+  <ion-nav-title >
+    <!-- <img src="img/logo.png" width="55" height="35" style="margin: 0 70% 0 8px;"/> -->
+    Profile
+    <button class="button button-clear ion-gear-a" style="margin-top: 1.6%; margin-left: 70%;" ng-click="openModal()"></button>
+  </ion-nav-title>
+
   <ion-content>
 
-    <div class="list">
+    <div class="list" style="margin-bottom: 0px;">
       <a class="item item-avatar" style="text-align: center; height: 180px !important;">
         <img src="img/ben.png" style="max-width: 70px !important; max-height: 70px !important;">
         <h2>{{firebaseUser.displayName || 'Usuário sem Nome'}}</h2>
         <p>Back off, man. I'm a scientist.</p>
         <hr>
-        <!-- <p style="text-align: center;"><b>FOLLOWING</b><br>
-         0
-        </p> -->
-        <p style="text-align: center;"><b>FOLLOWERS</b><br>
-         0
+<!-- <p style="text-align: center;"><b>FOLLOWING</b><br>
+0
+</p> -->
+<p style="text-align: center;"><b>FOLLOWERS</b><br>
+  0
+</p>
+</a>
+<ul class="item menuProfile" style="list-style:none; background-color: white; width: 100%;">
+  <li ng-click="menuSelected = 'posts'">
+    <i  ng-class="{'active': menuSelected == 'posts'}" class="icon ion-ios-filing liIcons"></i>
+</li><!-- 
+--><li ng-click="menuSelected = 'recipes'">
+  <i ng-class="{'active': menuSelected == 'recipes'}" class="icon ion-android-restaurant liIcons"></i>
+</li>
+</ul>
+
+<!--      <div class="tabs tabs-color-balanced">
+<a class="tab-item active">
+Timeline
+</a>
+<a class="tab-item">
+Recipes
+</a>
+<a class="tab-item">
+Medals
+</a>
+</div> -->
+
+
+</div>
+<div ng-if="menuSelected == 'posts'">
+  <div class="list card text-center" ng-if="!myPosts.length">
+    <h4>Não há posts para exibir</h4>
+  </div>
+  <div class="list card" ng-repeat="post in myPosts | orderBy: '-postDate'">
+    <div class="item item-avatar">
+      <img src="http://www.crustys.com/wp-content/uploads/2017/01/vegan.jpg">
+      <h2>{{firebaseUser.displayName || 'Usuário sem Nome'}}</h2>
+      <h4>{{post.postDate  | date : 'HH:mm • d/MM/yy'}}</h4>
+    </div>
+    <div class="item item-body">
+      <img class="full-image" ng-src="{{post.image ? post.image : 'http://babakunyho.eu/img/default-no-image.png'}}">
+      <p>
+        {{post.description || ''}}
+      </p>
+      <p>
+        <button class="subdued button icon-left ion-thumbsup button-clear button-dark" ng-click=""> 1 Like</button>
+        <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> 5 Comments</button>
+      </p>
+    </div>
+  </div>
+</div>
+<div ng-if="menuSelected == 'recipes'">
+  <div class="list card text-center" ng-if="!myRecipes.length">
+    <h4>Não há receitas para exibir</h4>
+  </div>
+  <!--   <a href="templates/single-recipe.html"> -->
+    <div class="list card" ng-repeat="recipe in myRecipes | orderBy: '-recipeDate'" >
+      <div class="item item-image">
+        <img class="full-image" ng-src="{{recipe.image ? recipe.image : 'http://www.seriouseats.com/images/2015/02/20150228-vegan-loaded-queso-dip7.jpg'}}" ng-click="openRecipe(recipe)">
+        <h2 class="spacing-top">{{recipe.title || ''}}</h2> 
+        <p class="spacing-bottom">
+          <button class="subdued button icon-left ion-thumbsup button-clear button-dark" ng-click=""> 1 Like</button>
+          <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> 5 Comments</button>
         </p>
-      </a>
+      </div>
+    </div>
+  </div>
 
- <!--      <div class="tabs tabs-color-balanced">
-        <a class="tab-item active">
-          Timeline
-        </a>
-        <a class="tab-item">
-          Recipes
-        </a>
-        <a class="tab-item">
-          Medals
-        </a>
-      </div> -->
+<!-- <ion-tabs class="tabs-clear tabs-icon-top">
+<ion-tab title="Timeline" icon-on="ion-ios-filing" icon-off="ion-ios-filing-outline">
+<ion-nav-view name="tab-timeline">
+<ion-content>
 
-      
-   </div>
-
- 
-
-      <ion-tabs class="tabs-clear tabs-icon-top">
-          <ion-tab title="Timeline" icon-on="ion-ios-filing" icon-off="ion-ios-filing-outline">
-          <ion-nav-view name="tab-timeline">
-            <ion-content>
-              <div class="list card text-center" ng-if="!myPosts.length">
-                <h4>Não há posts para exibir</h4>
-              </div>
-              <div class="list card" ng-repeat="post in myPosts | orderBy: '-postDate'">
-                <div class="item item-avatar">
-                  <img src="http://www.crustys.com/wp-content/uploads/2017/01/vegan.jpg">
-                  <h2>{{firebaseUser.displayName || 'Usuário sem Nome'}}</h2>
-                  <h4>{{post.postDate  | date : 'HH:mm • d/MM/yy'}}</h4>
-                </div>
-                <div class="item item-body">
-                  <img class="full-image" ng-src="{{post.image ? post.image : 'http://babakunyho.eu/img/default-no-image.png'}}">
-                  <p>
-                    {{post.description || ''}}
-                  </p>
-                  <p>
-                    <button class="subdued button icon-left ion-thumbsup button-clear button-dark" ng-click=""> 1 Like</button>
-                    <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> 5 Comments</button>
-                  </p>
-                </div>
-              </div>
-            </ion-content>
-          </ion-nav-view>
-        </ion-tab>
+</ion-content>
+</ion-nav-view>
+</ion-tab>
 
 
-        <ion-tab title="Recipes" icon-off="ion-android-restaurant" icon-on="ion-android-restaurant">
-          <ion-nav-view name="tab-recipes">
-            <ion-content>
-              <div class="list card text-center" ng-if="!myRecipes.length">
-                <h4>Não há receitas para exibir</h4>
-              </div>
-              <div class="list card" ng-repeat="recipe in myRecipes | orderBy: '-recipeDate'">
-                <div class="item item-image">
-                  <img class="full-image" ng-src="{{recipe.image ? recipe.image : 'http://www.seriouseats.com/images/2015/02/20150228-vegan-loaded-queso-dip7.jpg'}}">
-                  <h2 class="spacing-top">{{recipe.title || ''}}</h2> 
-                  <p class="spacing-bottom">
-                    <button class="subdued button icon-left ion-thumbsup button-clear button-dark" ng-click=""> 1 Like</button>
-                    <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> 5 Comments</button>
-                  </p>
-                </div>
-              </div>
-            </ion-content>
-          </ion-nav-view>
-        </ion-tab>
+<ion-tab title="Recipes" icon-off="ion-android-restaurant" icon-on="ion-android-restaurant">
+<ion-nav-view name="tab-recipes">
+<ion-content>
+<div class="list card text-center" ng-if="!myRecipes.length">
+<h4>Não há receitas para exibir</h4>
+</div>
+<div class="list card" ng-repeat="recipe in myRecipes | orderBy: '-recipeDate'">
+<div class="item item-image">
+<img class="full-image" ng-src="{{recipe.image ? recipe.image : 'http://www.seriouseats.com/images/2015/02/20150228-vegan-loaded-queso-dip7.jpg'}}">
+<h2 class="spacing-top">{{recipe.title || ''}}</h2> 
+<p class="spacing-bottom">
+<button class="subdued button icon-left ion-thumbsup button-clear button-dark" ng-click=""> 1 Like</button>
+<button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> 5 Comments</button>
+</p>
+</div>
+</div>
+</ion-content>
+</ion-nav-view>
+</ion-tab>
 
-      </ion-tabs>
+</ion-tabs> -->
 
-  </ion-content>
+</ion-content>
 </ion-view>
 
 
 <!-- <ion-modal-view class="scroll">
-    <ion-header-bar class="bar-light">
-       <button class="button ion-arrow-left-c button-clear button-dark" ng-click="modal.hide()"> Back</button>
+<ion-header-bar class="bar-light">
+<button class="button ion-arrow-left-c button-clear button-dark" ng-click="modal.hide()"> Back</button>
 
-       <button class="button button-clear ion-gear-a" style="margin-top: 1.6%; margin-left: 70%;" ng-click="openModal()"></button>
-    </ion-header-bar>
-    <ion-content>
+<button class="button button-clear ion-gear-a" style="margin-top: 1.6%; margin-left: 70%;" ng-click="openModal()"></button>
+</ion-header-bar>
+<ion-content>
 
-     <div class="list">
-      <a class="item item-avatar" style="text-align: center; height: 180px !important;">
-        <img src="img/adam.jpg" style="max-width: 70px !important; max-height: 70px !important;">
-        <h2>Carlos Oliveira</h2>
-        <h4>@carlosoliveira</h4>
-        <p>Back off, man. I'm a scientist.</p>
-        <hr>
-        <p style="text-align: center;"><b>FOLLOWERS</b><br>
-         0
-        </p>
-      </a>
+<div class="list">
+<a class="item item-avatar" style="text-align: center; height: 180px !important;">
+<img src="img/adam.jpg" style="max-width: 70px !important; max-height: 70px !important;">
+<h2>Carlos Oliveira</h2>
+<h4>@carlosoliveira</h4>
+<p>Back off, man. I'm a scientist.</p>
+<hr>
+<p style="text-align: center;"><b>FOLLOWERS</b><br>
+0
+</p>
+</a>
 
-      <div class="tabs tabs-color-balanced">
-        <a class="tab-item active">
-          Timeline
-        </a>
-        <a class="tab-item">
-          Recipes
-        </a>
-        <a class="tab-item">
-          Medals
-        </a>
-      </div>
-    </div>
-    </ion-content>
+<div class="tabs tabs-color-balanced">
+<a class="tab-item active">
+Timeline
+</a>
+<a class="tab-item">
+Recipes
+</a>
+<a class="tab-item">
+Medals
+</a>
+</div>
+</div>
+</ion-content>
 
- </ion-modal-view> -->
+</ion-modal-view> -->

@@ -1,20 +1,20 @@
 <ion-modal-view class="scroll">
     <ion-header-bar class="bar-light">
       <button class="button ion-arrow-left-c button-clear button-dark" ng-click="closeRecipe()"> Back</button>
-      <h1 class="title">{{recipe.title}}</h1>
+      <h1 class="title">{{selectedRecipe.title}}</h1>
       
     </ion-header-bar>
 
     <ion-content style="background: white !important;">
 
-      <div class="item-text-wrap" ng-repeat="recipe in myRecipes | orderBy: '-recipeDate'" ng-class="{active : isSelected(recipe)}" >
+      <div class="item-text-wrap">
         <div class="item item-image">
-          <h1 class="spacing-top">{{recipe.title}}</h1> 
-          <img class="full-image" ng-src="{{recipe.image}}">
+          <h1 class="spacing-top">{{selectedRecipe.title}}</h1> 
+          <img class="full-image" ng-src="{{selectedRecipe.image ? selectedRecipe.image : 'http://www.seriouseats.com/images/2015/02/20150228-vegan-loaded-queso-dip7.jpg'}}">
           <h2 class="spacing-top item-divider">Ingredients</h2>
-          <p>{{recipe.ingredients}}</p> 
+          <p>{{selectedRecipe.ingredients}}</p> 
           <h2 class="spacing-top item-divider">Directions</h2>
-          <p>{{recipe.directions}}</p> 
+          <p>{{selectedRecipe.directions}}</p> 
           <p class="spacing-bottom">
             <button class="subdued button icon-left ion-thumbsup button-clear button-dark" ng-click=""> 1 Like</button>
             <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> 5 Comments</button>

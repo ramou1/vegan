@@ -59,7 +59,7 @@ angular.module('starter.controllers', ['ngCordova'])
     $timeout(function(){
       $scope.myPosts = UserFirebase.userDatabase($scope.firebaseUser.uid) || {};
       $scope.myRecipes = UserFirebase.userRecipesDatabase($scope.firebaseUser.uid) || {};
-      $scope.myEvents = UserFirebase.userRecipesDatabase($scope.firebaseUser.uid) || {};
+      $scope.myEvents = UserFirebase.userEventsDatabase($scope.firebaseUser.uid) || {};
       $scope.myPosts.$loaded(function(data) {
         $ionicLoading.hide();
       },
@@ -324,7 +324,8 @@ angular.module('starter.controllers', ['ngCordova'])
   }).then(function(modal) {
     $scope.modal3 = modal;
   });
-  $scope.openRecipe = function() {
+  $scope.openRecipe = function(recipe) {
+    $scope.selectedRecipe = recipe;
     $scope.modal3.show();
   };
   $scope.closeRecipe = function() {
@@ -420,7 +421,7 @@ angular.module('starter.controllers', ['ngCordova'])
 })
 
 .controller('ProfileCtrl', function($scope, $stateParams, $cordovaCamera, $ionicModal) {
-
+  $scope.menuSelected = 'posts';
  $ionicModal.fromTemplateUrl('templates/modal-settings.html', {
     scope: $scope,
     animation: 'slide-in-up'
@@ -464,6 +465,7 @@ angular.module('starter.controllers', ['ngCordova'])
         // An error occured. Show a message to the user
     });
   }
+
   $scope.choosePhoto = function () {
     var options = {
       quality: 100,
@@ -522,7 +524,8 @@ angular.module('starter.controllers', ['ngCordova'])
   }).then(function(modal) {
     $scope.modal2 = modal;
   });
-  $scope.openEvent = function() {
+  $scope.openEvent = function(event) {
+    $scope.selectedEvent = event;
     $scope.modal2.show();
   };
   $scope.closeEvent = function() {
