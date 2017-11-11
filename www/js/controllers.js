@@ -245,23 +245,27 @@
          $scope.recipesModal = modal;
       });
       $scope.openModal = function(single) {
-         if(single && $scope.menuSelected == 'recipes'){
+         if(single && single == "settings"){
+            $scope.settingsModal.show();
+         }
+         else if(single && $scope.menuSelected == 'recipes'){
             $scope.selectedRecipe = single;
             $scope.singleRecipeModal.show();
          }
          else if($scope.menuSelected == 'recipes') $scope.recipesModal.show();
          else if($scope.menuSelected == 'events') $scope.eventsModal.show();
-         else if($scope.menuSelected == 'settingsModal') $scope.settingsModal.show();
          else $scope.postsModal.show();
       };
       $scope.closeModal = function(single) {
+         if(single && single == "settings"){
+            $scope.settingsModal.hide();
+         }
          if(single && $scope.menuSelected == 'recipes'){
             $scope.selectedRecipe = {};
             $scope.singleRecipeModal.hide();
          }
          else if($scope.menuSelected == 'recipes') $scope.recipesModal.hide();
          else if($scope.menuSelected == 'events') $scope.eventsModal.hide();
-         else if($scope.menuSelected == 'settingsModal') $scope.settingsModal.hide();
          else $scope.postsModal.hide();
       };
          $scope.openRecipe = function(recipe) {
