@@ -2,15 +2,16 @@
   <ion-nav-title >
     <!-- <img src="img/logo.png" width="55" height="35" style="margin: 0 70% 0 8px;"/> -->
     Profile
-    <button class="button button-clear ion-gear-a" style="margin-top: 1.6%; margin-left: 70%;" ng-click="openModal()"></button>
+    <button class="button button-clear ion-search" style="margin-top: 1.6%; margin-left: 57%;" ng-click=""></button>
+    <button class="button button-clear ion-gear-a" style="margin-top: 1.6%; margin-left: 8%;" ng-click="openModal()"></button>
   </ion-nav-title>
 
   <ion-content>
 
     <div class="list" style="margin-bottom: 0px;">
-      <a class="item item-avatar" style="text-align: center; height: 180px !important;">
+      <a class="item item-avatar" style="text-align: center;">
         <img src="img/ben.png" style="max-width: 70px !important; max-height: 70px !important;">
-        <h2>{{firebaseUser.displayName || 'Usuário sem Nome'}}</h2>
+        <h2 style="font-size: 22px">{{firebaseUser.displayName || 'Usuário sem Nome'}}</h2>
         <p>Back off, man. I'm a scientist.</p>
         <hr>
 <!-- <p style="text-align: center;"><b>FOLLOWING</b><br>
@@ -22,7 +23,7 @@
 </a>
 <ul class="item menuProfile" style="list-style:none; background-color: white; width: 100%;">
   <li ng-click="menuSelected = 'posts'">
-    <i  ng-class="{'active': menuSelected == 'posts'}" class="icon ion-ios-filing liIcons"></i>
+    <i  ng-class="{'active': menuSelected == 'posts'}" class="icon ion-compose liIcons"></i>
 </li><!-- 
 --><li ng-click="menuSelected = 'recipes'">
   <i ng-class="{'active': menuSelected == 'recipes'}" class="icon ion-android-restaurant liIcons"></i>

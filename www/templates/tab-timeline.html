@@ -52,6 +52,7 @@
   <div class="list card" ng-repeat="post in myPosts | orderBy: '-postDate'">
     <div class="item item-avatar">
       <img src="http://www.crustys.com/wp-content/uploads/2017/01/vegan.jpg">
+      <!-- <button class="button ion-android-more-vertical button-clear button-dark" style="margin: -9% 0 -20% 70%;" ng-click=""></button> -->
       <h2>{{firebaseUser.displayName || 'Usuário sem Nome'}}</h2>
       <h4>{{post.postDate  | date : 'HH:mm • d/MM/yy'}}</h4>
       <!-- <p>{{post.postDate  | date : 'medium'}}</p> -->
@@ -69,7 +70,6 @@
   </div>
 
 </ion-content>
-
 <ion-floating-button click="openModal()" has-footer="false" button-color="#027E83" icon="ion-compose" icon-color="#f8f8f8"> 
 </ion-floating-button>
 <!--
