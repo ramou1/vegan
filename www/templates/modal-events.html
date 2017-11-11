@@ -1,7 +1,7 @@
 <ion-modal-view class="scroll">
     <ion-header-bar class="bar-light">
       <!-- <h1 class="title">{{title}}</h1> -->
-       <button class="button ion-close button-clear button-dark" ng-click="modal.hide()"> Cancel</button>
+       <button class="button ion-close button-clear button-dark" ng-click="closeModal()"> Cancel</button>
     </ion-header-bar>
     <ion-content style="background: white !important;">
 
@@ -36,7 +36,7 @@
     </ion-content>
 
     <div class="bar bar-footer bar-light">
-        <button class="button button-clear icon-left ion-image" ng-click="choosePhoto()"></button>
-        <button class="button button-outline button-positive"" ng-click="newEvent()">New Event</button>
+        <button class="button button-clear icon-left ion-image" ng-click="choosePhoto('events')"></button>
+        <button class="button button-outline button-positive"" ng-click="newEvent('events')">New Event</button>
       </div>
  </ion-modal-view>

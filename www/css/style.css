@@ -6,12 +6,17 @@
     color: #fff; 
 }*/
 
-#floating-button {
+/*#floating-button {
     margin-bottom: 40px;
+}*/
+.postsButton li {
+  background-color: blue !important;
 }
-
+.recipesButton li {
+  background-color: red !important;
+}
 .menuProfile >li{
-  width: 50%;
+  width: 33%;
   display: inline-block;
   text-align: center;
   height: 100%;

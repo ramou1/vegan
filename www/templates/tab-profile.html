@@ -22,11 +22,14 @@
 </p>
 </a>
 <ul class="item menuProfile" style="list-style:none; background-color: white; width: 100%;">
-  <li ng-click="menuSelected = 'posts'">
+  <li ng-click="changeMenu('posts')">
     <i  ng-class="{'active': menuSelected == 'posts'}" class="icon ion-compose liIcons"></i>
 </li><!-- 
---><li ng-click="menuSelected = 'recipes'">
+--><li ng-click="changeMenu('recipes')">
   <i ng-class="{'active': menuSelected == 'recipes'}" class="icon ion-android-restaurant liIcons"></i>
+</li><!-- 
+--><li ng-click="changeMenu('events')">
+  <i ng-class="{'active': menuSelected == 'events'}" class="icon ion-calendar liIcons"></i>
 </li>
 </ul>
 
@@ -73,7 +76,7 @@ Medals
   <!--   <a href="templates/single-recipe.html"> -->
     <div class="list card" ng-repeat="recipe in myRecipes | orderBy: '-recipeDate'" >
       <div class="item item-image">
-        <img class="full-image" ng-src="{{recipe.image ? recipe.image : 'http://www.seriouseats.com/images/2015/02/20150228-vegan-loaded-queso-dip7.jpg'}}" ng-click="openRecipe(recipe)">
+        <img class="full-image" ng-src="{{recipe.image ? recipe.image : 'http://www.seriouseats.com/images/2015/02/20150228-vegan-loaded-queso-dip7.jpg'}}" ng-click="openModal(recipe)">
         <h2 class="spacing-top">{{recipe.title || ''}}</h2> 
         <p class="spacing-bottom">
           <button class="subdued button icon-left ion-thumbsup button-clear button-dark" ng-click=""> 1 Like</button>
@@ -82,75 +85,23 @@ Medals
       </div>
     </div>
   </div>
-
-<!-- <ion-tabs class="tabs-clear tabs-icon-top">
-<ion-tab title="Timeline" icon-on="ion-ios-filing" icon-off="ion-ios-filing-outline">
-<ion-nav-view name="tab-timeline">
-<ion-content>
-
+  <div  ng-if="menuSelected == 'events'">
+     <div class="list card text-center" ng-if="!myEvents.length">
+    <h4>Não há eventos para exibir</h4>
+  </div>
+  <div class="list card" ng-repeat="event in myEvents | orderBy: '-when'" ng-click="openEvent(event)">
+    <div class="item item-image">
+      <img class="full-image" ng-src="{{event.image ? event.image : 'https://scontent.fsjk2-1.fna.fbcdn.net/v/t1.0-9/21687443_485128058528596_1462436235687010864_n.jpg?oh=3f93249bacf629b85f8847f780ba09e5&oe=5A88868A'}}">
+      <h2 class="spacing-top"><b>{{event.title || ''}}</b></h2> 
+      <h4>{{event.when | date : 'd/MM/yy'}}</h4>
+      <p>Onde:{{event.where || ''}}</p> 
+    <p>Quando:{{event.when || ''}}</p>
+      <p class="subdued spacing-bottom">Confirmed</p>
+    </div>
+  </div>
+  </div>
 </ion-content>
-</ion-nav-view>
-</ion-tab>
-
-
-<ion-tab title="Recipes" icon-off="ion-android-restaurant" icon-on="ion-android-restaurant">
-<ion-nav-view name="tab-recipes">
-<ion-content>
-<div class="list card text-center" ng-if="!myRecipes.length">
-<h4>Não há receitas para exibir</h4>
-</div>
-<div class="list card" ng-repeat="recipe in myRecipes | orderBy: '-recipeDate'">
-<div class="item item-image">
-<img class="full-image" ng-src="{{recipe.image ? recipe.image : 'http://www.seriouseats.com/images/2015/02/20150228-vegan-loaded-queso-dip7.jpg'}}">
-<h2 class="spacing-top">{{recipe.title || ''}}</h2> 
-<p class="spacing-bottom">
-<button class="subdued button icon-left ion-thumbsup button-clear button-dark" ng-click=""> 1 Like</button>
-<button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> 5 Comments</button>
-</p>
-</div>
-</div>
-</ion-content>
-</ion-nav-view>
-</ion-tab>
-
-</ion-tabs> -->
-
-</ion-content>
+<ion-floating-button click="openModal()" has-footer="true" ng-class="menuSelected == 'recipes' ? 'recipesButton' : (menuSelected == 'posts' ? 'postsButton' : 'events')" icon="ion-compose" icon-color="#f8f8f8"> 
+</ion-floating-button>
 </ion-view>
 
-
-<!-- <ion-modal-view class="scroll">
-<ion-header-bar class="bar-light">
-<button class="button ion-arrow-left-c button-clear button-dark" ng-click="modal.hide()"> Back</button>
-
-<button class="button button-clear ion-gear-a" style="margin-top: 1.6%; margin-left: 70%;" ng-click="openModal()"></button>
-</ion-header-bar>
-<ion-content>
-
-<div class="list">
-<a class="item item-avatar" style="text-align: center; height: 180px !important;">
-<img src="img/adam.jpg" style="max-width: 70px !important; max-height: 70px !important;">
-<h2>Carlos Oliveira</h2>
-<h4>@carlosoliveira</h4>
-<p>Back off, man. I'm a scientist.</p>
-<hr>
-<p style="text-align: center;"><b>FOLLOWERS</b><br>
-0
-</p>
-</a>
-
-<div class="tabs tabs-color-balanced">
-<a class="tab-item active">
-Timeline
-</a>
-<a class="tab-item">
-Recipes
-</a>
-<a class="tab-item">
-Medals
-</a>
-</div>
-</div>
-</ion-content>
-
-</ion-modal-view> -->
