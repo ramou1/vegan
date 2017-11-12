@@ -8,11 +8,11 @@
 
   <ion-content>
 
-    <div class="list" style="margin-bottom: 0px;">
+    <div class="list item-text-wrap" style="margin-bottom: 0px;">
       <a class="item item-avatar" style="text-align: center;">
-        <img src="img/ben.png" style="max-width: 70px !important; max-height: 70px !important;">
+        <img  ng-src="{{profile.image ? profile.image : 'img/no-photo.png'}}" style="max-width: 70px !important; max-height: 70px !important;">
         <h2 style="font-size: 22px">{{firebaseUser.displayName || 'Usuário sem Nome'}}</h2>
-        <p>Back off, man. I'm a scientist.</p>
+        <p>{{firebaseUser.displayDescription}}</p>
         <hr>
 <!-- <p style="text-align: center;"><b>FOLLOWING</b><br>
 0
@@ -101,7 +101,7 @@ Medals
   </div>
   </div>
 </ion-content>
-<ion-floating-button click="openModal()" has-footer="true" ng-class="menuSelected == 'recipes' ? 'recipesButton' : (menuSelected == 'posts' ? 'postsButton' : 'events')" icon="ion-compose" icon-color="#f8f8f8"> 
+<ion-floating-button click="openModal()" has-footer="true" button-color="#027E83" ng-class="menuSelected == 'recipes' ? 'recipesButton' : (menuSelected == 'posts' ? 'postsButton' : 'events')" icon="ion-compose" icon-color="#f8f8f8"> 
 </ion-floating-button>
 </ion-view>
 

@@ -36,7 +36,8 @@ h2:link, p:link
 
 .scroll-content {
   /*#7BB156, #027E83*/
-  background: -webkit-linear-gradient( rgba(123,177,86,0.6), rgba(2,126,131,0.6)) !important;
+  /*Novas Cores: #40e47d, #8fd3f4*/
+  background: -webkit-linear-gradient( rgba(64,228,125,0.6), rgba(143,211,244,0.6)) !important;
 }
 
 .btn {
