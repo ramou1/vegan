@@ -188,14 +188,14 @@
       $scope.recipe = {};
       $scope.post = {};
       $scope.event = {};  
-      $ionicLoading.show();
       $timeout(function(){
          if($scope.firebaseUser && $scope.firebaseUser.uid){
-            $scope.myPosts = UserFirebase.userDatabase($scope.firebaseUser.uid) || {};
-            $scope.myRecipes = UserFirebase.userRecipesDatabase($scope.firebaseUser.uid) || {};
-           $scope.myEvents = UserFirebase.userEventsDatabase($scope.firebaseUser.uid) || {};
-           $scope.myPosts.$loaded(function(data) {
-             $ionicLoading.hide();
+          $ionicLoading.show();
+          $scope.myPosts = UserFirebase.userDatabase($scope.firebaseUser.uid) || {};
+          $scope.myRecipes = UserFirebase.userRecipesDatabase($scope.firebaseUser.uid) || {};
+          $scope.myEvents = UserFirebase.userEventsDatabase($scope.firebaseUser.uid) || {};
+          $scope.myPosts.$loaded(function(data) {
+            $ionicLoading.hide();
            },
            function(error) {
              $ionicPopup.alert({
@@ -204,7 +204,7 @@
              });
            })
          }else{
-            $state.go("tab.timeline");
+            $state.go("login");
          }
         
       },0);
