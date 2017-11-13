@@ -61,9 +61,11 @@
   <div class="list card" ng-repeat="post in myPosts | orderBy: '-postDate'">
     <div class="item item-avatar">
       <img src="http://www.crustys.com/wp-content/uploads/2017/01/vegan.jpg">
-      <h2>{{firebaseUser.displayName || 'Usuário sem Nome'}}</h2>
-      <h4>{{post.postDate  | date : 'HH:mm • d/MM/yy'}}</h4>
+        <h2>{{firebaseUser.displayName || 'Usuário sem Nome'}}</h2>
+        <h4>{{post.postDate  | date : 'HH:mm • d/MM/yy'}}</h4>
+      
     </div>
+    <button class="button button-assertive btnCard" ng-click="deleteItem($index, 'post')"> <i class="icon ion-ios-trash"></i> </button>
     <div class="item item-body">
       <img class="full-image" ng-src="{{post.image ? post.image : 'http://babakunyho.eu/img/default-no-image.png'}}">
       <p>
@@ -82,6 +84,7 @@
   </div>
   <!--   <a href="templates/single-recipe.html"> -->
     <div class="list card" ng-repeat="recipe in myRecipes | orderBy: '-recipeDate'" >
+      <button class="button button-assertive btnCardRE" ng-click="deleteItem($index, 'recipe')"> <i class="icon ion-ios-trash"></i> </button>
       <div class="item item-image">
         <img class="full-image" ng-src="{{recipe.image ? recipe.image : 'http://www.seriouseats.com/images/2015/02/20150228-vegan-loaded-queso-dip7.jpg'}}" ng-click="openModal(recipe)">
         <h2 class="spacing-top">{{recipe.title || ''}}</h2> 
@@ -97,6 +100,7 @@
     <h4>Não há eventos para exibir</h4>
   </div>
   <div class="list card" ng-repeat="event in myEvents | orderBy: '-when'" ng-click="openEvent(event)">
+    <button class="button button-assertive btnCardRE" ng-click="deleteItem($index, 'event')"> <i class="icon ion-ios-trash"></i> </button>
     <div class="item item-image">
       <img class="full-image" ng-src="{{event.image ? event.image : 'https://scontent.fsjk2-1.fna.fbcdn.net/v/t1.0-9/21687443_485128058528596_1462436235687010864_n.jpg?oh=3f93249bacf629b85f8847f780ba09e5&oe=5A88868A'}}">
       <h2 class="spacing-top"><b>{{event.title || ''}}</b></h2> 

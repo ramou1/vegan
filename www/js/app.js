@@ -6,7 +6,15 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.services', 'ion-floating-menu'])
-
+.run(["$rootScope", "$location", function($rootScope, $location) {
+  $rootScope.$on("$routeChangeError", function(event, next, previous, error) {
+    // We can catch the error thrown when the $requireSignIn promise is rejected
+    // and redirect the user back to the home page
+    if (error === "AUTH_REQUIRED") {
+      $location.path("/login");
+    }
+  });
+}])
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -35,7 +43,12 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
     .state('tab', {
     url: '/tab',
     abstract: true,
-    templateUrl: 'templates/tabs.html'
+    templateUrl: 'templates/tabs.html',
+    resolve: {
+      "currentAuth": ["Auth", function(Auth) {
+        return Auth.$requireSignIn();
+      }]
+    }
   })
 
   // Each tab has its own nav history stack:
@@ -45,7 +58,12 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
     views: {
       'tab-timeline': {
         templateUrl: 'templates/tab-timeline.html',
-        controller: 'TimelineCtrl'
+        controller: 'TimelineCtrl',
+        resolve: {
+          "currentAuth": ["Auth", function(Auth) {
+            return Auth.$requireSignIn();
+          }]
+        }
       }
     }
   })
@@ -64,7 +82,12 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
       views: {
         'tab-chats': {
           templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
+          controller: 'ChatDetailCtrl',
+          resolve: {
+            "currentAuth": ["Auth", function(Auth) {
+              return Auth.$requireSignIn();
+            }]
+          }
         }
       }
     })
@@ -74,7 +97,12 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
     views: {
       'tab-recipes': {
         templateUrl: 'templates/tab-recipes.html',
-        controller: 'RecipesCtrl'
+        controller: 'RecipesCtrl',
+        resolve: {
+          "currentAuth": ["Auth", function(Auth) {
+            return Auth.$requireSignIn();
+          }]
+        }
       }
     }
   })
@@ -84,7 +112,12 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
     views: {
       'tab-events': {
         templateUrl: 'templates/tab-events.html',
-        controller: 'EventsCtrl'
+        controller: 'EventsCtrl',
+        resolve: {
+          "currentAuth": ["Auth", function(Auth) {
+            return Auth.$requireSignIn();
+          }]
+        }
       }
     }
   })
@@ -94,7 +127,12 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
     views: {
       'tab-restaurants': {
         templateUrl: 'templates/tab-restaurants.html',
-        controller: 'RestaurantsCtrl'
+        controller: 'RestaurantsCtrl',
+        resolve: {
+          "currentAuth": ["Auth", function(Auth) {
+            return Auth.$requireSignIn();
+          }]
+        }
       }
     }
   })
@@ -104,7 +142,12 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
     views: {
       'profile': {
         templateUrl: 'templates/tab-profile.html',
-        controller: 'ProfileCtrl'
+        controller: 'ProfileCtrl',
+        resolve: {
+          "currentAuth": ["Auth", function(Auth) {
+            return Auth.$requireSignIn();
+          }]
+        }
       }
     }
   })
@@ -123,11 +166,14 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
 
   .state('main', {
     url: '/',
-    controller: 'MainCtrl'
+    controller: 'MainCtrl',
+    resolve: {
+      "currentAuth": ["Auth", function(Auth) {
+        return Auth.$requireSignIn();
+      }]
+    }
   })
  $ionicConfigProvider.tabs.position('bottom'); 
-  // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/');
-// $urlRouterProvider.otherwise('/tab/tab-timeline');
 
 });

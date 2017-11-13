@@ -50,16 +50,17 @@
      $scope.firebaseUser = {};
      $scope.auth = Auth;
      $scope.auth.$onAuthStateChanged(function(firebaseUser) {
+      console.log(firebaseUser);
       $timeout(function(){
        $scope.firebaseUser = firebaseUser;
-      },0);
-       if(!$scope.firebaseUser){
+         if(!$scope.firebaseUser){
          $state.go('login');
-       }else{
+         }else{
          $state.go("tab.timeline");
        }
-     });
+      },0);
 
+     });
    })
 
    .controller('LoginCtrl', function($scope, $stateParams, $state, Auth) {
@@ -176,7 +177,7 @@
 
    })
 
-   .controller('ProfileCtrl', function($scope, $ionicModal, $ionicLoading, $cordovaCamera, $state, $timeout, UserFirebase, $firebaseObject, $ionicPopup, $stateParams) {
+   .controller('ProfileCtrl', function(Auth, $scope, $ionicModal, $ionicLoading, $cordovaCamera, $state, $timeout, UserFirebase, $firebaseObject, $ionicPopup, $stateParams) {
       $scope.menuSelected = 'posts';
       $scope.eventsModal = '';
       $scope.recipesModal = '';
@@ -187,32 +188,32 @@
       $scope.selectedRecipe = '';
       $scope.recipe = {};
       $scope.post = {};
-      $scope.event = {};  
-      $timeout(function(){
-         if($scope.firebaseUser && $scope.firebaseUser.uid){
-          $ionicLoading.show();
-          $scope.myPosts = UserFirebase.userDatabase($scope.firebaseUser.uid) || {};
-          $scope.myRecipes = UserFirebase.userRecipesDatabase($scope.firebaseUser.uid) || {};
-          $scope.myEvents = UserFirebase.userEventsDatabase($scope.firebaseUser.uid) || {};
-          $scope.myPosts.$loaded(function(data) {
-            $ionicLoading.hide();
-           },
-           function(error) {
-             $ionicPopup.alert({
-               title: 'Opss....',
-               template: error.message
-             });
-           })
-         }else{
-            $state.go("login");
-         }
-        
-      },0);
+      $scope.flagEdit = false;
+      $scope.event = {};
+      $ionicLoading.show();
+      $scope.myPosts = UserFirebase.userDatabase(Auth.$getAuth().uid) || {};
+      $scope.myRecipes = UserFirebase.userRecipesDatabase(Auth.$getAuth().uid) || {};
+      $scope.myEvents = UserFirebase.userEventsDatabase(Auth.$getAuth().uid) || {};
+      $scope.myPosts.$loaded(function(data) {
+         $ionicLoading.hide();
+      },
+      function(error) {
+         $ionicPopup.alert({
+            title: 'Opss....',
+            template: error.message
+         });
+      })
+      $scope.deleteItem = function(objectId, objectType){
+         if(objectType == 'post') $scope.myPosts.$remove(objectId);
+         else if(objectType == 'event') $scope.myEvents.$remove(objectId);
+         else $scope.myRecipes.$remove(objectId);
+      }
       $scope.changeMenu = function(menu){
          $timeout(function(){
             $scope.menuSelected = menu;
          },0);
       }
+
 //----------------------------Modals
       $ionicModal.fromTemplateUrl('templates/modal-timeline.html', {
          scope: $scope,
@@ -331,6 +332,7 @@
             obj.title = $scope.recipe.title || '';
             obj.ingredients = $scope.recipe.ingredients || '';
             obj.directions = $scope.recipe.directions || '';
+            obj.userId = $scope.firebaseUser.uid;
             obj.recipeDate = Date.now();
             obj.$save().then(function(ref) {
                ref.key === obj.$id; // true
@@ -368,6 +370,7 @@
             obj = $firebaseObject(UserFirebase.userDatabaseRef($scope.firebaseUser.uid).child(result.key));
             obj.description = $scope.post.description || '';
             obj.postDate = Date.now();
+            obj.userId = $scope.firebaseUser.uid;
             obj.$save().then(function(ref) {
                ref.key === obj.$id; // true
             }, function(error) {
@@ -406,6 +409,7 @@
           obj = $firebaseObject(UserFirebase.userEventsDatabaseRef($scope.firebaseUser.uid).child(result.key));
           obj.title = $scope.event.title || '';
           obj.where = $scope.event.where || '';
+          obj.userId = $scope.firebaseUser.uid;
           obj.when = Date.now();
           obj.description = $scope.event.description || '';
           obj.$save().then(function(ref) {
