@@ -9,11 +9,23 @@
 /*#floating-button {
     margin-bottom: 40px;
 }*/
+table {
+  margin-left: 60px;
+  font-size: 12px;
+  border-collapse: collapse;
+  width: 50%;
+}
+
+td, th {
+  text-align: center;
+  padding: 8px 8px 0 8px;
+}
+
 .postsButton li {
-  background-color: blue !important;
+  background-color: #80bddb !important;
 }
 .recipesButton li {
-  background-color: red !important;
+  background-color: #80bddb !important;
 }
 .menuProfile >li{
   width: 33%;
@@ -55,8 +67,7 @@ h2:link, p:link
   margin-bottom: 12px !important;
 }
 
-.spacing-login {
-  
+.spacing-login { 
 }
 
 .item-avatar  {     
@@ -97,6 +108,7 @@ line-height: 25px;
 .item-input {
   margin: 5px 30px 0 30px;
   background: transparent;
+  font-color: white;
   border: 0px;
   border-bottom: 2px solid #80bddb;
 }

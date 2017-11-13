@@ -8,45 +8,52 @@
 
   <ion-content>
 
-    <div class="list item-text-wrap" style="margin-bottom: 0px;">
+    <div class="list item-text-wrap" style="margin-bottom: -10px;">
       <a class="item item-avatar" style="text-align: center;">
-        <img  ng-src="{{profile.image ? profile.image : 'img/no-photo.png'}}" style="max-width: 70px !important; max-height: 70px !important;">
-        <h2 style="font-size: 22px">{{firebaseUser.displayName || 'Usuário sem Nome'}}</h2>
+        <img ng-src="{{profile.image ? profile.image : 'img/no-photo.png'}}" style="max-width: 70px !important; max-height: 70px !important;">
+        <h2 style="font-size: 22px;">{{firebaseUser.displayName || 'Usuário sem Nome'}}</h2>
         <p>{{firebaseUser.displayDescription}}</p>
         <hr>
-<!-- <p style="text-align: center;"><b>FOLLOWING</b><br>
-0
-</p> -->
-<p style="text-align: center;"><b>FOLLOWERS</b><br>
-  0
-</p>
-</a>
-<ul class="item menuProfile" style="list-style:none; background-color: white; width: 100%;">
-  <li ng-click="changeMenu('posts')">
-    <i  ng-class="{'active': menuSelected == 'posts'}" class="icon ion-compose liIcons"></i>
-</li><!-- 
---><li ng-click="changeMenu('recipes')">
-  <i ng-class="{'active': menuSelected == 'recipes'}" class="icon ion-android-restaurant liIcons"></i>
-</li><!-- 
---><li ng-click="changeMenu('events')">
-  <i ng-class="{'active': menuSelected == 'events'}" class="icon ion-calendar liIcons"></i>
-</li>
-</ul>
+        <!-- <p style="text-align: center;"><b>FOLLOWERS</b><br>
+          0
+        </p> -->
+        <table align="center">
+          <tr>
+            <th>FOLLOWING</th>
+            <th>FOLLOWERS</th>
+          </tr>
+          <tr>
+            <td>{{firebaseUser.following || '0'}}</td>
+            <td>{{firebaseUser.followers || '0'}}</td>
+          </tr>
+        </table>
+        </a>
+        <ul class="item menuProfile" style="list-style:none; background-color: white; width: 100%;">
+          <li ng-click="changeMenu('posts')">
+            <i  ng-class="{'active': menuSelected == 'posts'}" class="icon ion-compose liIcons"></i>
+        </li><!-- 
+        --><li ng-click="changeMenu('recipes')">
+          <i ng-class="{'active': menuSelected == 'recipes'}" class="icon ion-android-restaurant liIcons"></i>
+        </li><!-- 
+        --><li ng-click="changeMenu('events')">
+          <i ng-class="{'active': menuSelected == 'events'}" class="icon ion-calendar liIcons"></i>
+        </li>
+        </ul>
 
-<!--      <div class="tabs tabs-color-balanced">
-<a class="tab-item active">
-Timeline
-</a>
-<a class="tab-item">
-Recipes
-</a>
-<a class="tab-item">
-Medals
-</a>
-</div> -->
+        <!--      <div class="tabs tabs-color-balanced">
+        <a class="tab-item active">
+        Timeline
+        </a>
+        <a class="tab-item">
+        Recipes
+        </a>
+        <a class="tab-item">
+        Medals
+        </a>
+        </div> -->
 
 
-</div>
+        </div>
 <div ng-if="menuSelected == 'posts'">
   <div class="list card text-center" ng-if="!myPosts.length">
     <h4>Não há posts para exibir</h4>
@@ -101,7 +108,7 @@ Medals
   </div>
   </div>
 </ion-content>
-<ion-floating-button click="openModal()" has-footer="true" button-color="#027E83" ng-class="menuSelected == 'recipes' ? 'recipesButton' : (menuSelected == 'posts' ? 'postsButton' : 'events')" icon="ion-compose" icon-color="#f8f8f8"> 
+<ion-floating-button click="openModal()" has-footer="true" button-color="#80bddb" ng-class="menuSelected == 'recipes' ? 'recipesButton' : (menuSelected == 'posts' ? 'postsButton' : 'events')" icon="ion-compose" icon-color="#f8f8f8"> 
 </ion-floating-button>
 </ion-view>
 
