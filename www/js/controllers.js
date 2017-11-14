@@ -290,8 +290,8 @@
             sourceType: Camera.PictureSourceType.CAMERA,
             allowEdit: true,
             encodingType: Camera.EncodingType.JPEG,
-            targetWidth: 400,
-            targetHeight: 400,
+            targetWidth: 600,
+            targetHeight: 600,
             popoverOptions: CameraPopoverOptions,
             saveToPhotoAlbum: false
          };
@@ -311,8 +311,8 @@
            sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
            allowEdit: true,
            encodingType: Camera.EncodingType.JPEG,
-           targetWidth: 300,
-           targetHeight: 300,
+           targetWidth: 600,
+           targetHeight: 600,
            popoverOptions: CameraPopoverOptions,
            saveToPhotoAlbum: false
          };
@@ -410,7 +410,7 @@
           obj.title = $scope.event.title || '';
           obj.where = $scope.event.where || '';
           obj.userId = $scope.firebaseUser.uid;
-          obj.when = Date.now();
+          obj.when = $scope.event.when;
           obj.description = $scope.event.description || '';
           obj.$save().then(function(ref) {
          ref.key === obj.$id; // true

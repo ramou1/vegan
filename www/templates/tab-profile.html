@@ -60,7 +60,7 @@
   </div>
   <div class="list card" ng-repeat="post in myPosts | orderBy: '-postDate'">
     <div class="item item-avatar">
-      <img src="http://www.crustys.com/wp-content/uploads/2017/01/vegan.jpg">
+      <img ng-src="{{profile.image ? profile.image : 'img/no-photo.png'}}">
         <h2>{{firebaseUser.displayName || 'Usuário sem Nome'}}</h2>
         <h4>{{post.postDate  | date : 'HH:mm • d/MM/yy'}}</h4>
       
@@ -104,10 +104,10 @@
     <div class="item item-image">
       <img class="full-image" ng-src="{{event.image ? event.image : 'https://scontent.fsjk2-1.fna.fbcdn.net/v/t1.0-9/21687443_485128058528596_1462436235687010864_n.jpg?oh=3f93249bacf629b85f8847f780ba09e5&oe=5A88868A'}}">
       <h2 class="spacing-top"><b>{{event.title || ''}}</b></h2> 
-      <h4>{{event.when | date : 'd/MM/yy'}}</h4>
-      <p>Onde:{{event.where || ''}}</p> 
-    <p>Quando:{{event.when || ''}}</p>
-      <p class="subdued spacing-bottom">Confirmed</p>
+      <p>{{event.where || ''}}</p> 
+      <!-- <p>{{event.when  | date : 'd/MM/yy'}}</p> -->
+      <p>{{event.when}}</p>
+      <p class="subdued spacing-bottom">{{event.confirmed || '0'}} Confirmed</p>
     </div>
   </div>
   </div>
