@@ -306,15 +306,15 @@
 
       $scope.choosePhoto = function (action) {
          var options =  {
-            quality: 100,
-            destinationType: Camera.DestinationType.DATA_URL,
-            sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-            allowEdit: true,
-            encodingType: Camera.EncodingType.JPEG,
-            targetWidth: 400,
-            targetHeight: 400,
-            popoverOptions: CameraPopoverOptions,
-            saveToPhotoAlbum: false
+           quality: 100,
+           destinationType: Camera.DestinationType.DATA_URL,
+           sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+           allowEdit: true,
+           encodingType: Camera.EncodingType.JPEG,
+           targetWidth: 300,
+           targetHeight: 300,
+           popoverOptions: CameraPopoverOptions,
+           saveToPhotoAlbum: false
          };
          $cordovaCamera.getPicture($scope.optionsCamera).then(function (imageData) {
             if(action == 'recipes') $scope.recipe.image =  "data:image/jpeg;base64," + imageData;
