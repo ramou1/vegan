@@ -316,7 +316,7 @@
            popoverOptions: CameraPopoverOptions,
            saveToPhotoAlbum: false
          };
-         $cordovaCamera.getPicture($scope.optionsCamera).then(function (imageData) {
+         $cordovaCamera.getPicture(options).then(function (imageData) {
             if(action == 'recipes') $scope.recipe.image =  "data:image/jpeg;base64," + imageData;
             else if(action == 'events') $scope.event.image = "data:image/jpeg;base64," + imageData;
             else $scope.post.image = "data:image/jpeg;base64," + imageData;
