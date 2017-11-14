@@ -290,8 +290,8 @@
             sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
             allowEdit: true,
             encodingType: Camera.EncodingType.JPEG,
-            targetWidth: 400,
-            targetHeight: 400,
+            targetWidth: 500,
+            targetHeight: 500,
             popoverOptions: CameraPopoverOptions,
             saveToPhotoAlbum: false
          };
@@ -307,12 +307,11 @@
       $scope.choosePhoto = function (action) {
          var options =  {
             quality: 100,
-            destinationType: Camera.DestinationType.DATA_URL,
-            sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+            sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY,
             allowEdit: true,
             encodingType: Camera.EncodingType.JPEG,
-            targetWidth: 400,
-            targetHeight: 400,
+            targetWidth: 500,
+            targetHeight: 500,
             popoverOptions: CameraPopoverOptions,
             saveToPhotoAlbum: false
          };

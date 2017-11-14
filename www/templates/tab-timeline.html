@@ -58,7 +58,8 @@
       <!-- <p>{{post.postDate  | date : 'medium'}}</p> -->
     </div>
     <div class="item item-body">
-      <img class="full-image" ng-src="{{post.image ? post.image : 'http://babakunyho.eu/img/default-no-image.png'}}">
+      <!-- <img class="full-image" ng-src="{{post.image ? post.image : 'http://babakunyho.eu/img/default-no-image.png'}}"> -->
+      <img class="full-image" ng-src="{{post.image}}">
       <p style="text-align: left">
         {{post.description || ''}}
       </p>
