@@ -10,7 +10,7 @@
 
     <div class="list item-text-wrap" style="margin-bottom: -10px;">
       <a class="item item-avatar" style="text-align: center;">
-        <img ng-src="{{profile.image ? profile.image : 'img/no-photo.png'}}" style="max-width: 70px !important; max-height: 70px !important;">
+        <img ng-src="{{user.profilePhoto ? user.profilePhoto : 'img/no-photo.png'}}" style="max-width: 70px !important; max-height: 70px !important;">
         <h2 style="font-size: 22px;">{{firebaseUser.displayName || 'Usuário sem Nome'}}</h2>
         <p>{{firebaseUser.displayDescription}}</p>
         <hr>
@@ -60,14 +60,14 @@
   </div>
   <div class="list card" ng-repeat="post in myPosts | orderBy: '-postDate'">
     <div class="item item-avatar">
-      <img ng-src="{{profile.image ? profile.image : 'img/no-photo.png'}}">
+      <img ng-src="{{user.profilePhoto ? user.profilePhoto : 'img/no-photo.png'}}">
         <h2>{{firebaseUser.displayName || 'Usuário sem Nome'}}</h2>
         <h4>{{post.postDate  | date : 'HH:mm • d/MM/yy'}}</h4>
       
     </div>
     <button class="button button-stable btnCard" ng-click="deleteItem($index, 'post')"> <i class="icon ion-ios-trash"></i> </button>
     <div class="item item-body">
-      <img class="full-image" ng-src="{{post.image ? post.image : 'http://babakunyho.eu/img/default-no-image.png'}}">
+      <img class="full-image" ng-src="{{post.image ? post.image : 'img/default-no-image.png'}}">
       <p>
         {{post.description || ''}}
       </p>
@@ -102,7 +102,7 @@
   <div class="list card" ng-repeat="event in myEvents | orderBy: '-when'" ng-click="openEvent(event)">
     <button class="button button-stable btnCardRE" ng-click="deleteItem($index, 'event')"> <i class="icon ion-ios-trash"></i> </button>
     <div class="item item-image">
-      <img class="full-image" ng-src="{{event.image ? event.image : 'https://scontent.fsjk2-1.fna.fbcdn.net/v/t1.0-9/21687443_485128058528596_1462436235687010864_n.jpg?oh=3f93249bacf629b85f8847f780ba09e5&oe=5A88868A'}}">
+      <img class="full-image" ng-click="openModal(event)" ng-src="{{event.image ? event.image : 'https://scontent.fsjk2-1.fna.fbcdn.net/v/t1.0-9/21687443_485128058528596_1462436235687010864_n.jpg?oh=3f93249bacf629b85f8847f780ba09e5&oe=5A88868A'}}">
       <h2 class="spacing-top"><b>{{event.title || ''}}</b></h2> 
       <p>{{event.where || ''}}</p> 
       <!-- <p>{{event.when  | date : 'd/MM/yy'}}</p> -->

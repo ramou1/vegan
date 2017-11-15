@@ -5,16 +5,11 @@
     </ion-header-bar>
 
     <ion-content style="background: white !important;">
-      <div class="list">
+      <div class="list text-center">
         <label class="item item-input">
-          <textarea placeholder="Say Something..." ng-model="post.description" rows="18" cols="1"></textarea>
-          <!-- <input ng-model="newUser.firstName" type="text"> -->
+          <textarea placeholder="Say Something..." ng-model="post.description" rows="5" cols="1"></textarea>
         </label>
-
-        <label class="item item-input">
-          <img ng-src="{{post.image}}" style="text-align: center height: 100px;">
-        </label>
-       <!--  <button class="button button-full button-positive" ng-click="createContact(newUser)">Create</button> -->
+        <img  class="modalImg" ng-if="post.image" ng-src="{{post.image}}">
       </div>
 
     </ion-content>

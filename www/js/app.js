@@ -6,17 +6,14 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.services', 'ion-floating-menu'])
-.run(["$rootScope", "$location", function($rootScope, $location) {
-  $rootScope.$on("$routeChangeError", function(event, next, previous, error) {
-    // We can catch the error thrown when the $requireSignIn promise is rejected
-    // and redirect the user back to the home page
-    if (error === "AUTH_REQUIRED") {
-      $location.path("/login");
-    }
-  });
-}])
-.run(function($ionicPlatform) {
+
+.run(function($ionicPlatform, $rootScope, $state) {
   $ionicPlatform.ready(function() {
+    $rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
+      if (error === "AUTH_REQUIRED") {
+        $state.go("login");
+      }
+    });
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
@@ -32,23 +29,11 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
 })
 
 .config(function($stateProvider,$ionicConfigProvider, $urlRouterProvider) {
-
-  // Ionic uses AngularUI Router which uses the concept of states
-  // Learn more here: https://github.com/angular-ui/ui-router
-  // Set up the various states which the app can be in.
-  // Each state's controller can be found in controllers.js
   $stateProvider
-
-  // setup an abstract state for the tabs directive
     .state('tab', {
     url: '/tab',
     abstract: true,
     templateUrl: 'templates/tabs.html',
-    resolve: {
-      "currentAuth": ["Auth", function(Auth) {
-        return Auth.$requireSignIn();
-      }]
-    }
   })
 
   // Each tab has its own nav history stack:
@@ -68,41 +53,17 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
     }
   })
 
-  .state('tab.chats', {
-      url: '/chats',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
-        }
-      }
-    })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl',
-          resolve: {
-            "currentAuth": ["Auth", function(Auth) {
-              return Auth.$requireSignIn();
-            }]
-          }
-        }
-      }
-    })
-
   .state('tab.recipes', {
     url: '/recipes',
     views: {
       'tab-recipes': {
         templateUrl: 'templates/tab-recipes.html',
-        controller: 'RecipesCtrl',
         resolve: {
           "currentAuth": ["Auth", function(Auth) {
             return Auth.$requireSignIn();
           }]
-        }
+        },
+        controller: 'RecipesCtrl'
       }
     }
   })
@@ -163,17 +124,7 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
     templateUrl: 'templates/login.html',
     controller: 'LoginCtrl'
   })
-
-  .state('main', {
-    url: '/',
-    controller: 'MainCtrl',
-    resolve: {
-      "currentAuth": ["Auth", function(Auth) {
-        return Auth.$requireSignIn();
-      }]
-    }
-  })
  $ionicConfigProvider.tabs.position('bottom'); 
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('tab/timeline');
 
 });
