@@ -330,15 +330,14 @@
          $ionicLoading.show();
          UserFirebase.userRecipesDatabase(currentAuth.uid).$add({"recipeDate": Date.now()}).then(function(result){
             obj = $firebaseObject(UserFirebase.userRecipesDatabaseRef(currentAuth.uid).child(result.key));
-            obj.title = $scope.recipe.title || '';
-            obj.ingredients = $scope.recipe.ingredients || '';
-            obj.directions = $scope.recipe.directions || '';
-            obj.userId = currentAuth.uid;
-
             if($scope.recipe.image){
                var stringUploadTask = UserFirebase.userRecipeStorage(currentAuth.uid+Date.now()).$putString($scope.recipe.image.replace('data:image/jpeg;base64,',''), 'base64');
                stringUploadTask.$complete(function(snapshot) {
                   obj.image = snapshot.downloadURL;
+                  obj.title = $scope.recipe.title || '';
+                  obj.ingredients = $scope.recipe.ingredients || '';
+                  obj.directions = $scope.recipe.directions || '';
+                  obj.userId = currentAuth.uid;
                   obj.$save().then(function(ref) {
                     $ionicLoading.hide();
                     var alertPopup = $ionicPopup.alert({
@@ -360,6 +359,10 @@
             }
             else
             {
+              obj.title = $scope.recipe.title || '';
+              obj.ingredients = $scope.recipe.ingredients || '';
+              obj.directions = $scope.recipe.directions || '';
+              obj.userId = currentAuth.uid;
               obj.$save().then(function(ref) {
                 $ionicLoading.hide();
                 var alertPopup = $ionicPopup.alert({
@@ -401,13 +404,14 @@
          $ionicLoading.show();
          UserFirebase.userDatabase(currentAuth.uid).$add({"postDate" : Date.now()}).then(function(result){
             obj = $firebaseObject(UserFirebase.userDatabaseRef(currentAuth.uid).child(result.key));
-            obj.description = $scope.post.description || '';
-            obj.userId = currentAuth.uid;
+
 
             if($scope.post.image){
                var stringUploadTask = UserFirebase.userStorage(currentAuth.uid+Date.now()).$putString($scope.post.image.replace('data:image/jpeg;base64,',''), 'base64');
                stringUploadTask.$complete(function(snapshot) {
                   obj.image = snapshot.downloadURL;
+                  obj.description = $scope.post.description || '';
+                  obj.userId = currentAuth.uid;
                   obj.$save().then(function(ref) {
                    $ionicLoading.hide();
                      var alertPopup = $ionicPopup.alert({
@@ -428,6 +432,8 @@
             }
             else
             {
+              obj.description = $scope.post.description || '';
+              obj.userId = currentAuth.uid;
               obj.$save().then(function(ref) {
                  $ionicLoading.hide();
                    var alertPopup = $ionicPopup.alert({
@@ -454,14 +460,15 @@
         $ionicLoading.show();
         UserFirebase.userEventsDatabase(currentAuth.uid).$add({}).then(function(result){
           obj = $firebaseObject(UserFirebase.userEventsDatabaseRef(currentAuth.uid).child(result.key));
-          obj.title = $scope.event.title || '';
-          obj.where = $scope.event.where || '';
-          obj.userId = currentAuth.uid;
-          obj.when = $scope.event.when || '';
-          obj.description = $scope.event.description || '';
+
          if($scope.event.image){
             var stringUploadTask = UserFirebase.userEventStorage(currentAuth.uid+Date.now()).$putString($scope.event.image.replace('data:image/jpeg;base64,',''), 'base64');
             stringUploadTask.$complete(function(snapshot) {
+              obj.title = $scope.event.title || '';
+              obj.where = $scope.event.where || '';
+              obj.userId = currentAuth.uid;
+              obj.when = $scope.event.when || '';
+              obj.description = $scope.event.description || '';
               obj.image = snapshot.downloadURL;
               obj.$save().then(function(ref) {
                 $ionicLoading.hide();
@@ -484,6 +491,11 @@
           }
           else
           {
+            obj.title = $scope.event.title || '';
+            obj.where = $scope.event.where || '';
+            obj.userId = currentAuth.uid;
+            obj.when = $scope.event.when || '';
+            obj.description = $scope.event.description || '';
             obj.$save().then(function(ref) {
              $ionicLoading.hide();
               var alertPopup = $ionicPopup.alert({
