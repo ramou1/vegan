@@ -10,7 +10,7 @@
 
     <div class="list item-text-wrap" style="margin-bottom: -10px;">
       <a class="item item-avatar" style="text-align: center;">
-        <img ng-src="{{user.profilePhoto ? user.profilePhoto : 'img/no-photo.png'}}" style="max-width: 70px !important; max-height: 70px !important;">
+        <img ng-src="{{user.profilePhoto ? user.profilePhoto : 'img/no-photo.png'}}" style="max-width: 70px !important; max-height: 70px !important; object-fit: cover; object-position: center;">
         <h2 style="font-size: 22px;">{{firebaseUser.displayName || 'Usuário sem Nome'}}</h2>
         <p>{{firebaseUser.displayDescription}}</p>
         <hr>
@@ -72,8 +72,8 @@
         {{post.description || ''}}
       </p>
       <p>
-        <button class="subdued button icon-left ion-thumbsup button-clear button-dark" ng-click=""> 1 Like</button>
-        <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> 5 Comments</button>
+        <button class="subdued button icon-left ion-thumbsup button-clear button-dark" ng-click=""> {{post.likes || '0'}} Like</button>
+        <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> {{post.comments || '0'}} Comments</button>
       </p>
     </div>
   </div>
@@ -89,8 +89,8 @@
         <img class="full-image" ng-src="{{recipe.image ? recipe.image : 'http://www.seriouseats.com/images/2015/02/20150228-vegan-loaded-queso-dip7.jpg'}}" ng-click="openModal(recipe)">
         <h2 class="spacing-top">{{recipe.title || ''}}</h2> 
         <p class="spacing-bottom">
-          <button class="subdued button icon-left ion-thumbsup button-clear button-dark" ng-click=""> 1 Like</button>
-          <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> 5 Comments</button>
+          <button class="subdued button icon-left ion-thumbsup button-clear button-dark" ng-click=""> {{recipe.likes || '0'}} Like</button>
+          <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> {{recipe.comments || '0'}} Comments</button>
         </p>
       </div>
     </div>

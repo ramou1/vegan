@@ -148,7 +148,7 @@
       })
       $scope.deleteItem = function(objectId, objectType){
         var confirmPopup = $ionicPopup.confirm({
-         title: 'Atenção!!!',
+         title: 'CONFIRMAÇÃO',
          template: 'Você tem certeza que deseja deletar est'+(objectType == "post" ? "e post" : (objectType == "event" ? 'e evento' : 'a receita'  ))+"?"
        });
 

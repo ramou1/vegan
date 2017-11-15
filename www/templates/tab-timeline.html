@@ -64,8 +64,8 @@
         {{post.description || ''}}
       </p>
       <p>
-        <button class="subdued button icon-left ion-thumbsup button-clear button-dark" ng-click=""> 1 Like</button>
-        <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> 5 Comments</button>
+        <button class="subdued button icon-left ion-thumbsup button-clear button-dark" ng-click=""> {{post.likes || '0'}} Like</button>
+        <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> {{post.comments || '0'}} Comments</button>
       </p>
     </div>
   </div>
