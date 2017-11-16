@@ -1,0 +1,30 @@
+<ion-modal-view class="scroll">
+    <div class="bar bar-header item-input-inset">
+      <label class="item-input-wrapper">
+        <i class="icon ion-ios-search placeholder-icon"></i>
+        <input type="search" placeholder="Search">
+      </label>
+      <button class="button button-clear button-dark" ng-click="closeModal('users')">
+        Cancel
+      </button>
+    </div>
+
+    <ion-content class="has-header" ng-repeat="users in firebaseUser | orderBy: '-displayName'"  style="background: white !important;">
+
+    <div class="list">
+      <a class="item item-avatar" href="#">
+        <img ng-src="{{user.profilePhoto ? user.profilePhoto : 'img/no-photo.png'}}" style="object-fit: cover; object-position: center;">
+        <h2>{{firebaseUser.displayName || 'Usuário sem Nome'}}</h2>
+        <p>{{firebaseUser.displayDescription || ''}}</p>
+      </a>
+    </div>
+
+      <!-- <div class="list">
+        <label class="item item-input">
+          <textarea placeholder="Say Something..." ng-model="post.description" cols="1"></textarea>
+        </label>
+      </div> -->
+
+    </ion-content>
+
+ </ion-modal-view>

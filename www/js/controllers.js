@@ -122,6 +122,7 @@
       $scope.eventsModal = '';
       $scope.recipesModal = '';
       $scope.settingsModal = '';
+      $scope.usersModal = '';
       $scope.postsModal = '';
       $scope.singleRecipeModal = '';
       $scope.singleEventModal = '';
@@ -198,6 +199,12 @@
       }).then(function(modal) {
          $scope.settingsModal = modal;
       });
+      $ionicModal.fromTemplateUrl('templates/modal-users.html', {
+         scope: $scope,
+         animation: 'slide-in-up'
+      }).then(function(modal) {
+         $scope.usersModal = modal;
+      });
       $ionicModal.fromTemplateUrl('templates/modal-recipes.html', {
          scope: $scope,
          animation: 'slide-in-up'
@@ -207,6 +214,9 @@
       $scope.openModal = function(single) {
          if(single && single == "settings"){
             $scope.settingsModal.show();
+         }
+         else if(single && single == "users"){
+            $scope.usersModal.show();
          }
          else if(single && $scope.menuSelected == 'recipes'){
             $scope.selectedRecipe = single;
@@ -223,6 +233,9 @@
       $scope.closeModal = function(single) {
          if(single && single == "settings"){
             $scope.settingsModal.hide();
+         }
+         if(single && single == "users"){
+            $scope.usersModal.hide();
          }
          if(single && $scope.menuSelected == 'recipes'){
             $scope.selectedRecipe = {};
@@ -242,6 +255,7 @@
          $scope.eventsModal.remove();
          $scope.recipesModal.remove();
          $scope.settingsModal.remove();
+         $scope.usersModal.remove();
          $scope.postsModal.remove();
          $scope.singleRecipeModal.remove();
       });
@@ -393,6 +407,7 @@
         $scope.user.$destroy();
         Auth.$signOut().then(function() {
           $scope.settingsModal.hide();
+          $scope.usersModal.hide();
           $state.go('login');
         }, function(error) {
           console.log("Error signing out:", error);  

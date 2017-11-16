@@ -2,7 +2,7 @@
   <ion-nav-title >
     <!-- <img src="img/logo.png" width="55" height="35" style="margin: 0 70% 0 8px;"/> -->
     Profile
-    <button class="button button-clear ion-search" style="margin-top: 1.6%; margin-left: 57%;" ng-click=""></button>
+    <button class="button button-clear ion-search" style="margin-top: 1.6%; margin-left: 57%;" ng-click="openModal('users')"></button>
     <button class="button button-clear ion-gear-a" style="margin-top: 1.6%; margin-left: 8%;" ng-click="openModal('settings')"></button>
   </ion-nav-title>
 
@@ -60,7 +60,7 @@
   </div>
   <div class="list card" ng-repeat="post in myPosts | orderBy: '-postDate'">
     <div class="item item-avatar">
-      <img ng-src="{{user.profilePhoto ? user.profilePhoto : 'img/no-photo.png'}}">
+      <img ng-src="{{user.profilePhoto ? user.profilePhoto : 'img/no-photo.png'}}" style="object-fit: cover; object-position: center;">
         <h2>{{firebaseUser.displayName || 'Usuário sem Nome'}}</h2>
         <h4>{{post.postDate  | date : 'HH:mm • d/MM/yy'}}</h4>
       
@@ -87,7 +87,7 @@
       <button class="button button-stable btnCardRE" ng-click="deleteItem($index, 'recipe')"> <i class="icon ion-ios-trash"></i> </button>
       <div class="item item-image">
         <img class="full-image" ng-src="{{recipe.image ? recipe.image : 'http://www.seriouseats.com/images/2015/02/20150228-vegan-loaded-queso-dip7.jpg'}}" ng-click="openModal(recipe)">
-        <h2 class="spacing-top">{{recipe.title || ''}}</h2> 
+        <h1 class="spacing-top" style="font-size: 19px;">{{recipe.title || ''}}</h1> 
         <p class="spacing-bottom">
           <button class="subdued button icon-left ion-thumbsup button-clear button-dark" ng-click=""> {{recipe.likes || '0'}} Like</button>
           <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> {{recipe.comments || '0'}} Comments</button>
@@ -105,8 +105,7 @@
       <img class="full-image" ng-click="openModal(event)" ng-src="{{event.image ? event.image : 'https://scontent.fsjk2-1.fna.fbcdn.net/v/t1.0-9/21687443_485128058528596_1462436235687010864_n.jpg?oh=3f93249bacf629b85f8847f780ba09e5&oe=5A88868A'}}">
       <h2 class="spacing-top"><b>{{event.title || ''}}</b></h2> 
       <p>{{event.where || ''}}</p> 
-      <!-- <p>{{event.when  | date : 'd/MM/yy'}}</p> -->
-      <p>{{event.when}}</p>
+      <p>{{event.when  | date : 'd/MM/yy'}}</p>
       <p class="subdued spacing-bottom">{{event.confirmed || '0'}} Confirmed</p>
     </div>
   </div>

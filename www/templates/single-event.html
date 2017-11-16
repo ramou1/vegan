@@ -9,17 +9,23 @@
       <div class="item-text-wrap">
         <div class="item item-image">
           <img class="full-image" ng-src="{{selectedEvent.image ? selectedEvent.image : 'https://scontent.fsjk2-1.fna.fbcdn.net/v/t1.0-9/21687443_485128058528596_1462436235687010864_n.jpg?oh=3f93249bacf629b85f8847f780ba09e5&oe=5A88868A'}}">
-          <h2 class="spacing-top item-divider">{{selectedEvent.title}}</h2> 
-          <p>{{selectedEvent.when}}</p> 
-          <p class="spacing-top item-divider">{{selectedEvent.where}}</p> 
-          <p>{{selectedEvent.description}}</p>
+          <h1 class="spacing-top item-divider" style="font-size: 20px;">{{selectedEvent.title}}</h1> 
+          <p style="text-align: left;">Date: {{selectedEvent.when  | date : 'd/MM/yy'}}</p> 
+          <p class="spacing-top item-divider" style="text-align: left;">Local: {{selectedEvent.where}}</p>
+          <hr> 
+          <p style="text-align: left;">{{selectedEvent.description}}</p>
         </div>
       </div>
 
     </ion-content>
 
-    <div class="bar bar-footer bar-stable">
+    <!-- <div class="bar bar-footer bar-stable">
       <button class="button button-block button-balanced" ng-click="">Confirm Presence</button>
+    </div> -->
+
+    <div class="bar bar-footer bar-light" style="background-color: transparent !important; border-top-width: 0px !important; padding: 0px !important;">
+     <!--  <button class="button button-full button-balanced" ng-click="createContact(newUser)" style="width: 50%; background-color: #346c7f !important">Forgot My Password</button> -->
+      <a class="button button-block button-balanced" style="font-weight: 500; font-size: 13px; width: 60%; margin: auto; background-color: #80bddb !important">Confirm Presence</a>
     </div>
 
  </ion-modal-view>
