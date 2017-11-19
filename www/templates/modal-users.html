@@ -6,25 +6,32 @@
       </label>
       <button class="button button-clear button-dark" ng-click="closeModal('users')">
         Cancel
-      </button>
+      </button><br>
     </div>
 
-    <ion-content class="has-header" ng-repeat="users in firebaseUser | orderBy: '-displayName'"  style="background: white !important;">
+<!--     <ion-content class="has-header" style="background: white !important;">
+      <div class="list-card" ng-repeat="test in tests">
+        <a class="item item-avatar" href="#">
+          <img ng-src="{{test.profilePhoto ? test.profilePhoto : 'img/no-photo.png'}}" style="object-fit: cover; object-position: center;">
+          <h2>{{test.id || 'Usuário sem Nome'}}</h2>
+          <p> {{test.length}} valores</p>
+          <p>{{test.displayDescription || ''}}</p>
+        </a>
+        <button class="button button-positive btnFollow" ng-click=""> <h6>SEGUIR</h6> </button>
+      </div>
+      
+    </ion-content> -->
 
-    <div class="list">
-      <a class="item item-avatar" href="#">
-        <img ng-src="{{user.profilePhoto ? user.profilePhoto : 'img/no-photo.png'}}" style="object-fit: cover; object-position: center;">
-        <h2>{{firebaseUser.displayName || 'Usuário sem Nome'}}</h2>
-        <p>{{firebaseUser.displayDescription || ''}}</p>
-      </a>
-    </div>
-
-      <!-- <div class="list">
-        <label class="item item-input">
-          <textarea placeholder="Say Something..." ng-model="post.description" cols="1"></textarea>
-        </label>
-      </div> -->
-
+    <ion-content class="has-header" style="background: white !important;">
+      <div class="list-card" ng-repeat="users in user" ng-click="tapName(Users.user)">
+        <a class="item item-avatar" href="#">
+          <img ng-src="{{users.ProfilePhoto ? users.ProfilePhoto : 'img/no-photo.png'}}" style="object-fit: cover; object-position: center;">
+          <h2>{{users.displayName || 'Usuário sem Nome'}}</h2>
+          <p>{{users.displayDescription || ''}}</p>
+          <p> {{users.length}} usuários encontrados</p>     
+        </a>
+        <button class="button button-positive btnFollow" ng-click=""> <h6>SEGUIR</h6> </button>
+      </div>
     </ion-content>
 
  </ion-modal-view>

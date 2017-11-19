@@ -108,6 +108,13 @@
    })
 
    .controller('ProfileCtrl', function(Auth, $scope, $ionicModal, $ionicLoading, currentAuth, $cordovaCamera, $state, $timeout, UserFirebase, $firebaseObject, $ionicPopup, $stateParams) {
+        $scope.tests = [{
+            "id": "primeiro"
+        }, {
+            "id": "segundo"
+        }, {
+            "id": "terceiro"
+        }];
       console.log("here");
       $timeout(function(){
          if(!currentAuth){
@@ -128,6 +135,7 @@
       $scope.singleEventModal = '';
       $scope.selectedRecipe = '';
       $scope.selectedEvent = '';
+      $scope.allUsers = {};
       $scope.recipe = {};
       $scope.post = {};
       $scope.flagEdit = false;
@@ -162,6 +170,12 @@
        });
          
       }
+
+     //  $scope.confirmPresence = function (){
+     //    var confirmed += 1;
+     //    $scope.event.confirmed = confirmed;
+     // }
+
       $scope.changeMenu = function(menu){
          $timeout(function(){
             $scope.menuSelected = menu;
@@ -280,6 +294,7 @@
                var stringUploadTask = UserFirebase.userProfileStorage(currentAuth.uid).$putString(imageData, 'base64');
                   stringUploadTask.$complete(function(snapshot) {
                      $scope.user["profilePhoto"] = snapshot.downloadURL;
+
                      $scope.user.$save().then(function(ref) {
                         console.log("sucesso");
                      }, function(error) {

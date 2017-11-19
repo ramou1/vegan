@@ -48,6 +48,13 @@ table {
   z-index: 999;
 }
 
+.btnFollow {
+  position: absolute;
+  right: 2%;
+  margin-top: -20%;
+  z-index: 999;
+}
+
 td, th {
   text-align: center;
   padding: 8px 8px 0 8px;
