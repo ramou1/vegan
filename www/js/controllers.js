@@ -9,18 +9,21 @@
      }
    })
 
-   .controller('RegisterCtrl', function($scope, $stateParams, $state, $window, Auth, $ionicPopup) {
+   .controller('RegisterCtrl', function($rootScope, UserFirebase, $scope, $stateParams, $firebaseObject, $state, $window, Auth, $ionicPopup) {
      $scope.user = {};
 
      $scope.SignUp = function (){
-       Auth.$createUserWithEmailAndPassword($scope.user.email,$scope.user.password)
+       Auth.$createUserWithEmailAndPassword($scope.user.email, $scope.user.password)
        .then(function(firebaseUser) {
-         $scope.message = "User created with uid: " + firebaseUser.uid;
-         firebaseUser.updateProfile({
-           displayName: $scope.user.name
-         }).then(function() {}, function(error) {
-         });
-         $state.go("tab.timeline");
+           $rootScope.currentUser = $firebaseObject(UserFirebase.userProfileDatabaseRef(firebaseUser.uid));
+            $rootScope.currentUser["name"] = $scope.user.name  || '';
+            $rootScope.currentUser["birthday"] = $scope.user.birth || '';
+            $rootScope.currentUser.$save().then(function(ref) {
+            $state.go("tab.timeline");   
+          }, function(error) {
+            console.log("Error:", error);
+          })
+   
        }).catch(function(error) {
          $ionicPopup.alert({
            title: 'Ops...',
@@ -30,106 +33,125 @@
      }
    })
 
-   .controller('TimelineCtrl', function($scope, $ionicModal, $cordovaCamera, $state, $timeout, currentAuth, UserFirebase, $firebaseObject, $ionicPopup) {
-      $scope.firebaseUser = {};
+   .controller('TimelineCtrl', function($rootScope, $ionicLoading, $scope, $ionicModal, $cordovaCamera, $state, $timeout, currentAuth, UserFirebase, $firebaseObject, $ionicPopup) {
+      $scope.followingPosts = [];
       $timeout(function(){
          if(!currentAuth){
             $state.go('login');
-         }else{
-            console.log("here");
-            console.log(currentAuth);
-            $scope.firebaseUser = UserFirebase.userProfileDatabase(currentAuth.uid);
-       }
+         }
       },0);
-     $scope.title = 'modal';
-
-   $ionicModal.fromTemplateUrl('templates/modal-comments.html', {
-     scope: $scope,
-     animation: 'slide-in-up'
-   }).then(function(modal) {
-     $scope.modal2 = modal;
-   });
-   $scope.openComments = function() {
-     $scope.modal2.show();
-   };
-   $scope.closeComments = function() {
-     $scope.modal2.hide();
-   };
-   // Cleanup the modal when we're done with it!
-   $scope.$on('$destroy', function() {
-     $scope.modal2.remove();
-   });
-   // Execute action on hide modal
-   $scope.$on('modal2.hidden', function() {
-   // Execute action
-   });
-   // Execute action on remove modal
-   $scope.$on('modal2.removed', function() {
-   // Execute action
-   });
-
+ 
+      
+     
+      $scope.doRefresh = function() {
+        $scope.followingPosts = [];
+        if($rootScope.currentUser.following){
+          $ionicLoading.show();
+          var promises = $rootScope.currentUser.following.map(function(value, key){
+            return  UserFirebase.followingPostsDatabase(value).$loaded(function(dataPost){
+              if(dataPost){
+                return UserFirebase.userProfileDatabase(value).$loaded(function(dataUser){
+                    dataPost.map(function(value, key){
+                      if(dataUser["name"]) value["name"] = dataUser["name"];
+                      if(dataUser["profilePhoto"]) value["profilePhoto"] = dataUser["profilePhoto"];
+                      $scope.followingPosts.push(value);
+                    })
+                })
+              }else{
+                return;
+              }
+            })
+          })
+          Promise.all(promises).then(function(results) {
+            $scope.$broadcast('scroll.refreshComplete');
+            $ionicLoading.hide();
+          })
+        }
+        else{
+          $scope.$broadcast('scroll.refreshComplete');
+        }
+          
+         UserFirebase.followingPostsDatabase(currentAuth.uid).$loaded(function(dataPost){
+            if(dataPost){
+              dataPost.map(function(value, key){
+                  if($rootScope.currentUser["name"]) value["name"] = $rootScope.currentUser["name"];
+                  if($rootScope.currentUser["profilePhoto"]) value["profilePhoto"] = $rootScope.currentUser["profilePhoto"];
+                  return $scope.followingPosts.push(value);
+                })
+            }
+          })
+      }
+     if(!$rootScope.currentUser){
+        $rootScope.currentUser =  $firebaseObject(UserFirebase.userProfileDatabaseRef(currentAuth.uid));
+         $rootScope.currentUser.$loaded(function(data){
+          $scope.doRefresh();
+        });
+      }else{
+        $scope.doRefresh();
+    }
    
    })
 
 
-   .controller('RecipesCtrl', function($scope, $ionicModal, $cordovaCamera, $state, $timeout, UserFirebase, $firebaseObject, $ionicPopup) {
-     $scope.settings = {
-       enableFriends: true
-     };
-   $ionicModal.fromTemplateUrl('templates/modal-comments.html', {
-     scope: $scope,
-     animation: 'slide-in-up'
-   }).then(function(modal) {
-     $scope.modal2 = modal;
-   });
-   $scope.openComments = function() {
-     $scope.modal2.show();
-   };
-   $scope.closeComments = function() {
-     $scope.modal2.hide();
-   };
-   // Cleanup the modal when we're done with it!
-   $scope.$on('$destroy', function() {
-     $scope.modal2.remove();
-   });
-   // Execute action on hide modal
-   $scope.$on('modal2.hidden', function() {
-   // Execute action
-   });
-   // Execute action on remove modal
-   $scope.$on('modal2.removed', function() {
-   // Execute action
-   });
-   // Cleanup the modal when we're done with it!
-   $scope.$on('$destroy', function() {
-     $scope.modal2.remove();
-   });
-
+   .controller('RecipesCtrl', function($scope,currentAuth,  $ionicLoading, $rootScope, $ionicModal, $cordovaCamera, $state, $timeout, UserFirebase, $firebaseObject, $ionicPopup) {
+      $scope.doRefresh = function() {
+        $scope.followingRecipes = [];
+        if($rootScope.currentUser.following){
+          $ionicLoading.show();
+          var promises = $rootScope.currentUser.following.map(function(value, key){
+            return  UserFirebase.followingRecipesDatabase(value).$loaded(function(dataPost){
+              if(dataPost){
+                return UserFirebase.userProfileDatabase(value).$loaded(function(dataUser){
+                    dataPost.map(function(value, key){
+                      if(dataUser["name"]) value["name"] = dataUser["name"];
+                      if(dataUser["profilePhoto"]) value["profilePhoto"] = dataUser["profilePhoto"];
+                      $scope.followingRecipes.push(value);
+                    })
+                })
+              }else{
+                return;
+              }
+            })
+          })
+          Promise.all(promises).then(function(results) {
+            $scope.$broadcast('scroll.refreshComplete');
+            $ionicLoading.hide();
+          })
+        }
+        else{
+          $scope.$broadcast('scroll.refreshComplete');
+        }
+          
+         UserFirebase.followingRecipesDatabase(currentAuth.uid).$loaded(function(dataPost){
+            if(dataPost){
+              console.log(dataPost);
+              dataPost.map(function(value, key){
+                  if($rootScope.currentUser["name"]) value["name"] = $rootScope.currentUser["name"];
+                  if($rootScope.currentUser["profilePhoto"]) value["profilePhoto"] = $rootScope.currentUser["profilePhoto"];
+                  return $scope.followingRecipes.push(value);
+                })
+            }
+          })
+      }
+    $scope.followingRecipes = [];
+      if(!$rootScope.currentUser){
+        $rootScope.currentUser =  $firebaseObject(UserFirebase.userProfileDatabaseRef(currentAuth.uid));
+         $rootScope.currentUser.$loaded(function(data){
+          $scope.doRefresh();
+        });
+      }else{
+        $scope.doRefresh();
+      }
    })
 
    .controller('ProfileCtrl', function(Auth, $scope, $ionicModal, $ionicLoading, currentAuth, $cordovaCamera, $state, $timeout, UserFirebase, $firebaseObject, $ionicPopup, $stateParams) {
-       // $scope.allUsers = ref.child("users");
-       // var usr = UserFirebase.userProfileStorage(currentAuth.uid);
-       // $scope.allUsers = usr;
-        $scope.users = UserFirebase.userDatabase(currentAuth.uid);
-        $scope.users["displayName"] = currentAuth.displayName;
-
-        // $scope.users = [{
-        //     "name": "primeiro"
-        // }, {
-        //     "name": "segundo"
-        // }, {
-        //     "name": "terceiro"
-        // }];
+      $scope.usersToFollow = [];
       console.log("here");
       $timeout(function(){
          if(!currentAuth){
             console.log("here");
             $state.go('login');
-         }else{
-            $scope.firebaseUser = UserFirebase.userProfileDatabase(currentAuth.uid);
-            $scope.firebaseUser["displayName"] = currentAuth.displayName;
-       }
+         }
       },0);
       $scope.menuSelected = 'posts';
       $scope.eventsModal = '';
@@ -141,12 +163,13 @@
       $scope.singleEventModal = '';
       $scope.selectedRecipe = '';
       $scope.selectedEvent = '';
+      $scope.allUsers = {};
       $scope.recipe = {};
       $scope.post = {};
       $scope.flagEdit = false;
       $scope.event = {};
+      $scope.usersFold = [];
       $ionicLoading.show();
-      $scope.allUsers = {};
       $scope.firebaseUser = {};
       $scope.user =  $firebaseObject(UserFirebase.userProfileDatabaseRef(currentAuth.uid));
       $scope.myPosts = UserFirebase.userDatabase(currentAuth.uid);
@@ -161,6 +184,62 @@
             template: error.message
          });
       })
+      $scope.findUsers = function(username){
+        try{
+          $scope.usersFold.$destroy();
+        }
+        catch(e){
+
+        }
+        $ionicLoading.show();
+        $scope.usersFold = UserFirebase.usersSearchDatabase(username);
+        $scope.usersFold.$loaded(function(data){
+          console.log(data);
+          $ionicLoading.hide();
+        });
+      };
+      $scope.saveUser = function(){
+        $ionicLoading.show();
+        $scope.user.$save().then(function(ref) {
+          $ionicLoading.hide();
+          var alertPopup = $ionicPopup.alert({
+             title: 'Sucesso!',
+             template: "Informações salvas com sucesso!"
+          });
+          alertPopup.then(function(res) {
+             $scope.closeModal();
+             $scope.recipe = {};
+          }, function(error) {
+             console.log(error);
+        });
+      })
+    }
+      $scope.follow = function(userId){
+        $ionicLoading.show();
+        $firebaseObject(UserFirebase.userProfileDatabaseRef(userId)).$loaded(function(data){
+          if($scope.user && $scope.user.following && $scope.user.following.indexOf(userId)!== -1){
+            $scope.user.following.splice($scope.user.following.indexOf(userId), 1);
+            data.followers.splice(data.followers.indexOf($scope.user.$id), 1);
+          }
+          else
+          {
+            if($scope.user.following) $scope.user.following.push(userId);
+            else $scope.user.following = [userId];
+            if(data.followers) data.followers.push($scope.user.$id);
+            else data.followers = [$scope.user.$id];
+          }
+          data.$save().then(function(ref) {
+            $scope.user.$save().then(function(ref) {
+              $ionicLoading.hide();
+            }, function(error) {
+              console.log("Error:", error);
+            });
+            }, function(error) {
+              console.log("Error:", error);
+          });
+          
+        })
+      }
       $scope.deleteItem = function(objectId, objectType){
         var confirmPopup = $ionicPopup.confirm({
          title: 'CONFIRMAÇÃO',
@@ -176,11 +255,6 @@
        });
          
       }
-
-     //  $scope.confirmPresence = function (){
-     //    var confirmed += 1;
-     //    $scope.event.confirmed = confirmed;
-     // }
 
       $scope.changeMenu = function(menu){
          $timeout(function(){
@@ -421,11 +495,16 @@
          });
       };
       $scope.logout = function(){
-        $scope.firebaseUser.$destroy();
-        $scope.myEvents.$destroy();
-        $scope.myRecipes.$destroy();
-        $scope.myPosts.$destroy();
-        $scope.user.$destroy();
+        try{
+          $scope.firebaseUser.$destroy();
+          $scope.myEvents.$destroy();
+          $scope.myRecipes.$destroy();
+          $scope.myPosts.$destroy();
+          $scope.user.$destroy();
+        }catch(e){
+
+        }
+
         Auth.$signOut().then(function() {
           $scope.settingsModal.hide();
           $scope.usersModal.hide();
@@ -555,30 +634,61 @@
         });
       };
       $scope.$on('$stateChangeStart', function(){
-        $scope.modal.remove();
+        if($scope.modal) $scope.modal.remove();
       });
    })
-   .controller('EventsCtrl', function($scope, $ionicModal, $cordovaCamera, $state, $timeout, UserFirebase, $firebaseObject, $ionicPopup) {
+   .controller('EventsCtrl', function($scope, $ionicLoading, $rootScope,currentAuth, $ionicModal, $cordovaCamera, $state, $timeout, UserFirebase, $firebaseObject, $ionicPopup) {
 
-     $scope.event = {};
 
-      $ionicModal.fromTemplateUrl('templates/single-event.html', {
-        scope: $scope,
-        animation: 'slide-in-up'
-      }).then(function(modal) {
-        $scope.modal2 = modal;
-      });
-      $scope.openEvent = function(event) {
-        $scope.selectedEvent = event;
-        $scope.modal2.show();
-      };
-      $scope.closeEvent = function() {
-        $scope.modal2.hide();
-      };
-      // Cleanup the modal when we're done with it!
-      $scope.$on('$destroy', function() {
-        $scope.modal2.remove();
-      });
+     
+      $scope.doRefresh = function() {
+        $scope.followingEvents = [];
+        if($rootScope.currentUser.following){
+          $ionicLoading.show();
+          var promises = $rootScope.currentUser.following.map(function(value, key){
+            return  UserFirebase.followingEventsDatabase(value).$loaded(function(dataPost){
+              if(dataPost){
+                return UserFirebase.userProfileDatabase(value).$loaded(function(dataUser){
+                    dataPost.map(function(value, key){
+                      if(dataUser["name"]) value["name"] = dataUser["name"];
+                      if(dataUser["profilePhoto"]) value["profilePhoto"] = dataUser["profilePhoto"];
+                      $scope.followingEvents.push(value);
+                    })
+                })
+              }else{
+                return;
+              }
+            })
+          })
+          Promise.all(promises).then(function(results) {
+            $scope.$broadcast('scroll.refreshComplete');
+            $ionicLoading.hide();
+          })
+        }
+        else{
+          $scope.$broadcast('scroll.refreshComplete');
+        }
+          
+         UserFirebase.followingEventsDatabase(currentAuth.uid).$loaded(function(dataPost){
+            if(dataPost){
+              dataPost.map(function(value, key){
+                  if($rootScope.currentUser["name"]) value["name"] = $rootScope.currentUser["name"];
+                  if($rootScope.currentUser["profilePhoto"]) value["profilePhoto"] = $rootScope.currentUser["profilePhoto"];
+                  return $scope.followingEvents.push(value);
+                })
+            }
+          })
+      }
+      $scope.followingEvents = [];
+      if(!$rootScope.currentUser){
+        $rootScope.currentUser =  $firebaseObject(UserFirebase.userProfileDatabaseRef(currentAuth.uid));
+         $rootScope.currentUser.$loaded(function(data){
+          $scope.doRefresh();
+        });
+      }else{
+        $scope.doRefresh();
+      }
+      
    })
 
    .controller('RestaurantsCtrl', function($scope, $ionicLoading) {

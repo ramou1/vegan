@@ -2,7 +2,7 @@
     <div class="bar bar-header item-input-inset">
       <label class="item-input-wrapper">
         <i class="icon ion-ios-search placeholder-icon"></i>
-        <input type="search" placeholder="Search">
+        <input type="search" ng-model="searchUser" ng-change="findUsers(searchUser)" placeholder="Search">
       </label>
       <button class="button button-clear button-dark" ng-click="closeModal('users')">
         Cancel
@@ -22,6 +22,7 @@
       
     </ion-content>
 
+<<<<<<< HEAD
 <!--     <ion-content class="has-header" style="background: white !important;">
       <div class="list-card" ng-repeat="users in allUsers" ng-click="tapName(Users.user)">
         <a class="item item-avatar" href="#">
@@ -29,8 +30,17 @@
           <h2>{{users.name || 'Usuário sem Nome'}}</h2>
           <p>{{users.displayDescription || ''}}</p>
           <p> {{users.length}} usuários encontrados</p>     
+=======
+    <ion-content class="has-header" style="background: white !important;">
+      <p> {{usersFold.length}} usuários encontrados</p>
+      <div class="list-card" ng-if="singleUser.$id != user.$id" ng-repeat="singleUser in usersFold">
+        <a class="item item-avatar" href="#">
+          <img ng-src="{{singleUser.profilePhoto ? singleUser.profilePhoto : 'img/no-photo.png'}}" style="object-fit: cover; object-position: center;">
+          <h2>{{singleUser.name || 'Usuário sem Nome'}}</h2>
+          <p>{{singleUser.description || ''}}</p>
+>>>>>>> f6c08c067d304efb8f3fe1e99dba7a86a648ee96
         </a>
-        <button class="button button-positive btnFollow" ng-click=""> <h6>SEGUIR</h6> </button>
+        <button class="button button-positive btnFollow" ng-click="follow(singleUser.$id)"> <h6>{{(user.following && user.following.indexOf(singleUser.$id)!== -1 ? 'Unfollow' : 'Follow')}}</h6> </button>
       </div>
     </ion-content> -->
 

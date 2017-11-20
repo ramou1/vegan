@@ -2,7 +2,7 @@
     <ion-header-bar class="bar-light">
       <!-- <h1 class="title">{{title}}</h1> -->
        <button class="button ion-arrow-left-c button-clear button-dark" ng-click="closeModal('settings')"> Back</button>
-       <button class="button button-outline button-positive">Save</button>
+       <button class="button button-outline button-positive" ng-click="saveUser()">Save</button>
     </ion-header-bar>
     
     <ion-content style="background: white !important;">
@@ -15,18 +15,14 @@
     </div>
 
     <label class="item item-input">
-      <input type="text" placeholder="Name" style="font-size: 15px !important;">
+      <input type="text" placeholder="Name" ng-model="user.name" style="font-size: 15px !important;">
     </label>
 
     <label class="item item-input">
-        <input type="text" placeholder="E-mail" style="font-size: 15px !important;">
+      <textarea placeholder="Description" ng-model="user.description" rows="3" style="font-size: 15px !important;"></textarea>
     </label>
 
-    <label class="item item-input">
-      <textarea placeholder="Description" rows="5" style="font-size: 15px !important;"></textarea>
-    </label>
-
-    <div class="item item-divider" style="text-align: center; background-color: #e8e8e8;">
+    <div class="item item-divider" style="margin-top: 10px; text-align: center; background-color: #e8e8e8;">
       Profile Image
     </div>
 
