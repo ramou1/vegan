@@ -40,76 +40,63 @@
         </li>
         </ul>
 
-        <!--      <div class="tabs tabs-color-balanced">
-        <a class="tab-item active">
-        Timeline
-        </a>
-        <a class="tab-item">
-        Recipes
-        </a>
-        <a class="tab-item">
-        Medals
-        </a>
-        </div> -->
-
-
         </div>
-<div ng-if="menuSelected == 'posts'">
-  <div class="list card text-center" ng-if="!myPosts.length">
-    <h4>Não há posts para exibir</h4>
-  </div>
-  <div class="list card" ng-repeat="post in myPosts | orderBy: '-postDate'">
-    <div class="item item-avatar">
-      <img ng-src="{{user.profilePhoto ? user.profilePhoto : 'img/no-photo.png'}}" style="object-fit: cover; object-position: center;">
-        <h2>{{firebaseUser.displayName || 'Usuário sem Nome'}}</h2>
-        <h4>{{post.postDate  | date : 'HH:mm • d/MM/yy'}}</h4>
-      
-    </div>
-    <button class="button button-stable btnCard" ng-click="deleteItem($index, 'post')"> <i class="icon ion-ios-trash"></i> </button>
-    <div class="item item-body">
-      <img class="full-image" ng-src="{{post.image ? post.image : 'img/default-no-image.png'}}">
-      <p>
-        {{post.description || ''}}
-      </p>
-      <p>
-        <button class="subdued button icon-left ion-thumbsup button-clear button-dark" ng-click=""> {{post.likes || '0'}} Like</button>
-        <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> {{post.comments || '0'}} Comments</button>
-      </p>
-    </div>
-  </div>
-</div>
-<div ng-if="menuSelected == 'recipes'">
-  <div class="list card text-center" ng-if="!myRecipes.length">
-    <h4>Não há receitas para exibir</h4>
-  </div>
-  <!--   <a href="templates/single-recipe.html"> -->
-    <div class="list card" ng-repeat="recipe in myRecipes | orderBy: '-recipeDate'" >
-      <button class="button button-stable btnCardRE" ng-click="deleteItem($index, 'recipe')"> <i class="icon ion-ios-trash"></i> </button>
-      <div class="item item-image">
-        <img class="full-image" ng-src="{{recipe.image ? recipe.image : 'http://www.seriouseats.com/images/2015/02/20150228-vegan-loaded-queso-dip7.jpg'}}" ng-click="openModal(recipe)">
-        <h1 class="spacing-top" style="font-size: 19px;">{{recipe.title || ''}}</h1> 
-        <p class="spacing-bottom">
-          <button class="subdued button icon-left ion-thumbsup button-clear button-dark" ng-click=""> {{recipe.likes || '0'}} Like</button>
-          <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> {{recipe.comments || '0'}} Comments</button>
-        </p>
+
+      <div ng-if="menuSelected == 'posts'">
+        <div class="list card text-center" ng-if="!myPosts.length">
+          <h4>Não há posts para exibir</h4>
+        </div>
+        <div class="list card" ng-repeat="post in myPosts | orderBy: '-postDate'">
+          <div class="item item-avatar">
+            <img ng-src="{{user.profilePhoto ? user.profilePhoto : 'img/no-photo.png'}}" style="object-fit: cover; object-position: center;">
+              <h2>{{firebaseUser.displayName || 'Usuário sem Nome'}}</h2>
+              <h4>{{post.postDate  | date : 'HH:mm • d/MM/yy'}}</h4>  
+          </div>
+          <button class="button button-stable btnCard" ng-click="deleteItem($index, 'post')"> <i class="icon ion-ios-trash"></i> </button>
+          <div class="item item-body">
+            <img class="full-image" ng-src="{{post.image ? post.image : 'img/default-no-image.png'}}">
+            <p>
+              {{post.description || ''}}
+            </p>
+            <p>
+              <button class="subdued button icon-left ion-thumbsup button-clear button-dark" ng-click=""> {{post.likes || '0'}} Like</button>
+              <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> {{post.comments || '0'}} Comments</button>
+            </p>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-  <div  ng-if="menuSelected == 'events'">
-     <div class="list card text-center" ng-if="!myEvents.length">
-    <h4>Não há eventos para exibir</h4>
-  </div>
-  <div class="list card" ng-repeat="event in myEvents | orderBy: '-when'" ng-click="openEvent(event)">
-    <button class="button button-stable btnCardRE" ng-click="deleteItem($index, 'event')"> <i class="icon ion-ios-trash"></i> </button>
-    <div class="item item-image">
-      <img class="full-image" ng-click="openModal(event)" ng-src="{{event.image ? event.image : 'https://scontent.fsjk2-1.fna.fbcdn.net/v/t1.0-9/21687443_485128058528596_1462436235687010864_n.jpg?oh=3f93249bacf629b85f8847f780ba09e5&oe=5A88868A'}}">
-      <h2 class="spacing-top"><b>{{event.title || ''}}</b></h2> 
-      <p>{{event.where || ''}}</p> 
-      <p>{{event.when  | date : 'd/MM/yy'}}</p>
-      <p class="subdued spacing-bottom">{{event.confirmed || '0'}} Confirmed</p>
-    </div>
-  </div>
-  </div>
+      <div ng-if="menuSelected == 'recipes'">
+        <div class="list card text-center" ng-if="!myRecipes.length">
+          <h4>Não há receitas para exibir</h4>
+        </div>
+        <!--   <a href="templates/single-recipe.html"> -->
+          <div class="list card" ng-repeat="recipe in myRecipes | orderBy: '-recipeDate'" >
+            <button class="button button-stable btnCardRE" ng-click="deleteItem($index, 'recipe')"> <i class="icon ion-ios-trash"></i> </button>
+            <div class="item item-image">
+              <img class="full-image" ng-src="{{recipe.image ? recipe.image : 'http://www.seriouseats.com/images/2015/02/20150228-vegan-loaded-queso-dip7.jpg'}}" ng-click="openModal(recipe)">
+              <h1 class="spacing-top" style="font-size: 19px;">{{recipe.title || ''}}</h1> 
+              <p class="spacing-bottom">
+                <button class="subdued button icon-left ion-thumbsup button-clear button-dark" ng-click=""> {{recipe.likes || '0'}} Like</button>
+                <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> {{recipe.comments || '0'}} Comments</button>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div  ng-if="menuSelected == 'events'">
+           <div class="list card text-center" ng-if="!myEvents.length">
+          <h4>Não há eventos para exibir</h4>
+        </div>
+        <div class="list card" ng-repeat="event in myEvents | orderBy: '-when'" ng-click="openEvent(event)">
+          <button class="button button-stable btnCardRE" ng-click="deleteItem($index, 'event')"> <i class="icon ion-ios-trash"></i> </button>
+          <div class="item item-image">
+            <img class="full-image" ng-click="openModal(event)" ng-src="{{event.image ? event.image : 'https://scontent.fsjk2-1.fna.fbcdn.net/v/t1.0-9/21687443_485128058528596_1462436235687010864_n.jpg?oh=3f93249bacf629b85f8847f780ba09e5&oe=5A88868A'}}">
+            <h2 class="spacing-top"><b>{{event.title || ''}}</b></h2> 
+            <p>{{event.where || ''}}</p> 
+            <p>{{event.when  | date : 'd/MM/yy'}}</p>
+            <p class="subdued spacing-bottom">{{event.confirmed || '0'}} Confirmed</p>
+          </div>
+        </div>
+        </div>
 </ion-content>
 <ion-floating-button click="openModal()" has-footer="true" button-color="#80bddb" ng-class="menuSelected == 'recipes' ? 'recipesButton' : (menuSelected == 'posts' ? 'postsButton' : 'events')" icon="ion-compose" icon-color="#f8f8f8"> 
 </ion-floating-button>

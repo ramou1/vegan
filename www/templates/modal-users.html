@@ -9,29 +9,29 @@
       </button><br>
     </div>
 
-<!--     <ion-content class="has-header" style="background: white !important;">
-      <div class="list-card" ng-repeat="test in tests">
+    <ion-content class="has-header" style="background: white !important;">
+      <div class="list-card" ng-repeat="test in users">
         <a class="item item-avatar" href="#">
-          <img ng-src="{{test.profilePhoto ? test.profilePhoto : 'img/no-photo.png'}}" style="object-fit: cover; object-position: center;">
-          <h2>{{test.id || 'Usuário sem Nome'}}</h2>
-          <p> {{test.length}} valores</p>
+          <img ng-src="{{users.profilePhoto ? users.profilePhoto : 'img/no-photo.png'}}" style="object-fit: cover; object-position: center;">
+          <h2>{{users.displayName || 'Usuário sem Nome'}}</h2>
+          <p> {{users.length}} valores</p>
           <p>{{test.displayDescription || ''}}</p>
         </a>
         <button class="button button-positive btnFollow" ng-click=""> <h6>SEGUIR</h6> </button>
       </div>
       
-    </ion-content> -->
+    </ion-content>
 
-    <ion-content class="has-header" style="background: white !important;">
-      <div class="list-card" ng-repeat="users in user" ng-click="tapName(Users.user)">
+<!--     <ion-content class="has-header" style="background: white !important;">
+      <div class="list-card" ng-repeat="users in allUsers" ng-click="tapName(Users.user)">
         <a class="item item-avatar" href="#">
           <img ng-src="{{users.ProfilePhoto ? users.ProfilePhoto : 'img/no-photo.png'}}" style="object-fit: cover; object-position: center;">
-          <h2>{{users.displayName || 'Usuário sem Nome'}}</h2>
+          <h2>{{users.name || 'Usuário sem Nome'}}</h2>
           <p>{{users.displayDescription || ''}}</p>
           <p> {{users.length}} usuários encontrados</p>     
         </a>
         <button class="button button-positive btnFollow" ng-click=""> <h6>SEGUIR</h6> </button>
       </div>
-    </ion-content>
+    </ion-content> -->
 
  </ion-modal-view>

@@ -108,13 +108,19 @@
    })
 
    .controller('ProfileCtrl', function(Auth, $scope, $ionicModal, $ionicLoading, currentAuth, $cordovaCamera, $state, $timeout, UserFirebase, $firebaseObject, $ionicPopup, $stateParams) {
-        $scope.tests = [{
-            "id": "primeiro"
-        }, {
-            "id": "segundo"
-        }, {
-            "id": "terceiro"
-        }];
+       // $scope.allUsers = ref.child("users");
+       // var usr = UserFirebase.userProfileStorage(currentAuth.uid);
+       // $scope.allUsers = usr;
+        $scope.users = UserFirebase.userDatabase(currentAuth.uid);
+        $scope.users["displayName"] = currentAuth.displayName;
+
+        // $scope.users = [{
+        //     "name": "primeiro"
+        // }, {
+        //     "name": "segundo"
+        // }, {
+        //     "name": "terceiro"
+        // }];
       console.log("here");
       $timeout(function(){
          if(!currentAuth){
@@ -135,12 +141,12 @@
       $scope.singleEventModal = '';
       $scope.selectedRecipe = '';
       $scope.selectedEvent = '';
-      $scope.allUsers = {};
       $scope.recipe = {};
       $scope.post = {};
       $scope.flagEdit = false;
       $scope.event = {};
       $ionicLoading.show();
+      $scope.allUsers = {};
       $scope.firebaseUser = {};
       $scope.user =  $firebaseObject(UserFirebase.userProfileDatabaseRef(currentAuth.uid));
       $scope.myPosts = UserFirebase.userDatabase(currentAuth.uid);
