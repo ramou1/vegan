@@ -38,18 +38,7 @@
       $timeout(function(){
          if(!currentAuth){
             $state.go('login');
-         }else{
-            // if($rootScope.user && $rootScope.user.new){
-            //   $rootScope.currentUser =  $firebaseObject(UserFirebase.userProfileDatabaseRef(currentAuth.uid));
-            //   $rootScope.currentUser["uid"] = currentAuth.uid;
-            //   $rootScope.currentUser["name"] = $rootScope.user["name"] || '';
-            //   $rootScope.currentUser["birthday"] = $rootScope.user["birthday"] || '';
-            //   $rootScope.currentUser.$save().then(function(ref) {   
-            //   }, function(error) {
-            //     console.log("Error:", error);
-            //   })
-            // }
-          }
+         }
       },0);
  
       
@@ -105,9 +94,6 @@
 
 
    .controller('RecipesCtrl', function($scope,currentAuth,  $ionicLoading, $rootScope, $ionicModal, $cordovaCamera, $state, $timeout, UserFirebase, $firebaseObject, $ionicPopup) {
-
-      
-     
       $scope.doRefresh = function() {
         $scope.followingRecipes = [];
         if($rootScope.currentUser.following){
@@ -269,11 +255,6 @@
        });
          
       }
-
-     //  $scope.confirmPresence = function (){
-     //    var confirmed += 1;
-     //    $scope.event.confirmed = confirmed;
-     // }
 
       $scope.changeMenu = function(menu){
          $timeout(function(){
