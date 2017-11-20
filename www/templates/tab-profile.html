@@ -11,8 +11,8 @@
     <div class="list item-text-wrap" style="margin-bottom: -10px;">
       <a class="item item-avatar" style="text-align: center;">
         <img ng-src="{{user.profilePhoto ? user.profilePhoto : 'img/no-photo.png'}}" style="max-width: 70px !important; max-height: 70px !important; object-fit: cover; object-position: center;">
-        <h2 style="font-size: 22px;">{{firebaseUser.displayName || 'Usuário sem Nome'}}</h2>
-        <p>{{firebaseUser.displayDescription}}</p>
+        <h2 style="font-size: 22px;">{{user.name || 'Usuário sem Nome'}}</h2>
+        <p>{{user.description}}</p>
         <hr>
         <!-- <p style="text-align: center;"><b>FOLLOWERS</b><br>
           0
@@ -23,8 +23,8 @@
             <th>FOLLOWERS</th>
           </tr>
           <tr>
-            <td>{{firebaseUser.following || '0'}}</td>
-            <td>{{firebaseUser.followers || '0'}}</td>
+            <td>{{user.following.length || '0'}}</td>
+            <td>{{user.followers.length || '0'}}</td>
           </tr>
         </table>
         </a>
@@ -61,7 +61,7 @@
   <div class="list card" ng-repeat="post in myPosts | orderBy: '-postDate'">
     <div class="item item-avatar">
       <img ng-src="{{user.profilePhoto ? user.profilePhoto : 'img/no-photo.png'}}" style="object-fit: cover; object-position: center;">
-        <h2>{{firebaseUser.displayName || 'Usuário sem Nome'}}</h2>
+        <h2>{{user.name || 'Usuário sem Nome'}}</h2>
         <h4>{{post.postDate  | date : 'HH:mm • d/MM/yy'}}</h4>
       
     </div>

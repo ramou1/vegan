@@ -7,6 +7,15 @@ angular.module('starter.services', [])
    .factory("UserFirebase", function($firebaseArray, $firebaseStorage) {
      var ref = firebase.database().ref();
      return {
+        usersSearchDatabaseRef:function(username){
+         var database = ref.child("users").startAt('rafael');
+         return database;
+       },
+       usersSearchDatabase: function(username){
+        console.log(username);
+         var database = ref.child("users").orderByChild('name').startAt(username).endAt(username+'\w|\W');
+         return $firebaseArray(database);
+       },
        userProfileDatabaseRef:function(userid){
          var database = ref.child("users").child(userid);
          return database;
@@ -30,6 +39,30 @@ angular.module('starter.services', [])
        userStorage: function(userid){
          var storage = firebase.storage().ref("userPosts/"+userid);
          return $firebaseStorage(storage);
+       },
+        followingPostsDatabase: function(userId){
+         var database = ref.child("posts").child(userId);
+         return $firebaseArray(database);
+       },
+       followingPostsDatabaseRef:function(userid){
+         var database = ref.child("posts").child(userid);
+         return database;
+       },
+       followingRecipesDatabase: function(userId){
+         var database = ref.child("recipes").child(userId);
+         return $firebaseArray(database);
+       },
+       followingRecipesDatabaseRef:function(userid){
+         var database = ref.child("recipes").child(userid);
+         return database;
+       },
+        followingEventsDatabase: function(userId){
+         var database = ref.child("events").child(userId);
+         return $firebaseArray(database);
+       },
+       followingEventsDatabaseRef:function(userid){
+         var database = ref.child("events").child(userid);
+         return database;
        },
        userRecipesDatabaseRef: function(userid){
          var database = ref.child("recipes").child(userid);

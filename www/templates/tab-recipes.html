@@ -3,26 +3,14 @@
     Recipes
    </ion-nav-title>
   <ion-content>
-
- <!-- <a href="#/tab/login" >
-  <div class="list card">
-    <div class="item item-image">
-        <img src="http://www.seriouseats.com/images/2015/02/20150228-vegan-loaded-queso-dip7.jpg"/>
-        <h2 class="spacing-top">Vegan Loaded Queso</h2>
-        <p class="spacing-bottom">
-          <a href="#" class="subdued button icon-left ion-thumbsup button-clear button-dark">1 Like</a>
-          <a href="#" class="subdued button icon-left ion-chatbox button-clear button-dark">5 Comments</a>
-        </p>
-    </div>
-  </div>
-</a> -->
-  
-  
-  <div class="list card text-center" ng-if="!myRecipes.length">
+     <ion-refresher on-refresh="doRefresh()">
+                     
+    </ion-refresher>
+  <div class="list card text-center" ng-if="!followingRecipes.length">
     <h4>Não há receitas para exibir</h4>
   </div>
 <!--   <a href="templates/single-recipe.html"> -->
-  <div class="list card" ng-repeat="recipe in myRecipes | orderBy: '-recipeDate'" >
+  <div class="list card" ng-repeat="recipe in followingRecipes | orderBy: 'recipeDate'" >
     <div class="item item-image">
       <img class="full-image" ng-src="{{recipe.image ? recipe.image : 'http://www.seriouseats.com/images/2015/02/20150228-vegan-loaded-queso-dip7.jpg'}}" ng-click="openRecipe(recipe)">
       <h2 class="spacing-top">{{recipe.title || ''}}</h2> 
@@ -34,8 +22,5 @@
   </div>
       
   </ion-content>
-
-<ion-floating-button click="openModal()" has-footer="true" button-color="#80bddb" icon="ion-plus-round" icon-color="#f8f8f8"> 
-</ion-floating-button>
 
 </ion-view>
