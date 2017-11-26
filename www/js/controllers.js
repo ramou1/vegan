@@ -157,13 +157,13 @@
       $scope.eventsModal = '';
       $scope.recipesModal = '';
       $scope.settingsModal = '';
+      $scope.singleUserModal = ''; //continuar
       $scope.usersModal = '';
       $scope.postsModal = '';
       $scope.singleRecipeModal = '';
       $scope.singleEventModal = '';
       $scope.selectedRecipe = '';
       $scope.selectedEvent = '';
-      $scope.allUsers = {};
       $scope.recipe = {};
       $scope.post = {};
       $scope.flagEdit = false;

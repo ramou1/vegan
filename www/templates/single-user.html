@@ -1,6 +1,6 @@
 <ion-view>
   <ion-header-bar class="bar-light">
-       <button class="button ion-arrow-left-c button-clear button-dark" ng-click=""> Back</button>
+       <button class="button ion-arrow-left-c button-clear button-dark" ng-click=""> Voltar</button>
     </ion-header-bar>
   <ion-content>
 
@@ -15,8 +15,8 @@
         </p> -->
         <table align="center">
           <tr>
-            <th>FOLLOWING</th>
-            <th>FOLLOWERS</th>
+            <th>SEGUINDO</th>
+            <th>SEGUIDORES</th>
           </tr>
           <tr>
             <td>{{firebaseUser.following || '0'}}</td>
@@ -59,7 +59,7 @@
               </p>
               <p>
                 <button class="subdued button icon-left ion-thumbsup button-clear button-dark" ng-click=""> {{post.likes || '0'}} Like</button>
-                <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> {{post.comments || '0'}} Comments</button>
+                <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> {{post.comments || '0'}} Comentários</button>
               </p>
             </div>
           </div>
@@ -76,7 +76,7 @@
                 <h1 class="spacing-top" style="font-size: 19px;">{{recipe.title || ''}}</h1> 
                 <p class="spacing-bottom">
                   <button class="subdued button icon-left ion-thumbsup button-clear button-dark" ng-click=""> {{recipe.likes || '0'}} Like</button>
-                  <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> {{recipe.comments || '0'}} Comments</button>
+                  <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> {{recipe.comments || '0'}} Comentários</button>
                 </p>
               </div>
             </div>

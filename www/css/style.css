@@ -35,6 +35,13 @@ table {
   }
 }
 
+.valida{
+  font-size:12px;
+  color: red;
+  font-weight: bold;
+  margin: 0 !important;
+}
+
 .btnCardRE{
   position: absolute;
   right: 1px;
@@ -51,8 +58,18 @@ table {
 .btnFollow {
   position: absolute;
   right: 2%;
-  margin-top: -20%;
+  margin-top: -18%;
+  width: 76px;
   z-index: 999;
+}
+
+.btnFollow.buttonActive {
+  position: absolute;
+  right: 2%;
+  margin-top: -18%;
+  width: 76px;
+  z-index: 999;
+  background-color: red;
 }
 
 td, th {

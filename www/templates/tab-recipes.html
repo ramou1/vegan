@@ -1,6 +1,6 @@
 <ion-view>
    <ion-nav-title >
-    Recipes
+    Receitas
    </ion-nav-title>
   <ion-content>
      <ion-refresher on-refresh="doRefresh()">
@@ -16,7 +16,7 @@
       <h2 class="spacing-top">{{recipe.title || ''}}</h2> 
       <p class="spacing-bottom">
         <button class="subdued button icon-left ion-thumbsup button-clear button-dark" ng-click=""> {{recipe.likes || '0'}} Like</button>
-        <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> {{recipe.comments || '0'}} Comments</button>
+        <button class="subdued button icon-left ion-chatbox button-clear button-dark" ng-click="openComments()"> {{recipe.comments || '0'}} Comentários</button>
       </p>
     </div>
   </div>

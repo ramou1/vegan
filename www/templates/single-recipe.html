@@ -1,6 +1,6 @@
 <ion-modal-view class="scroll">
     <ion-header-bar class="bar-light">
-      <button class="button ion-arrow-left-c button-clear button-dark" ng-click="closeModal(true)"> Back</button>
+      <button class="button ion-arrow-left-c button-clear button-dark" ng-click="closeModal(true)"> Voltar</button>
       <h1 class="title" style="text-align: center">{{selectedRecipe.title}}</h1>
       
     </ion-header-bar>
@@ -11,17 +11,17 @@
         <div class="item item-image">
           <!-- <h1 class="spacing-top">{{selectedRecipe.title}}</h1>  -->
           <img class="full-image" ng-src="{{selectedRecipe.image ? selectedRecipe.image : 'http://www.seriouseats.com/images/2015/02/20150228-vegan-loaded-queso-dip7.jpg'}}">
-          <h2 class="spacing-top item-divider" style="font-size: 22px;">Ingredients</h2>
-          <p class="item-text-wrap">{{selectedRecipe.ingredients}}</p> 
-          <h2 class="spacing-top item-divider" style="font-size: 22px;">Directions</h2>
-          <p class="item-text-wrap">{{selectedRecipe.directions}}</p>
+          <h2 class="spacing-top item-divider" style="font-size: 22px;">Ingredientes</h2>
+          <p class="item-text-wrap padding">{{selectedRecipe.ingredients}}</p> 
+          <h2 class="spacing-top item-divider" style="font-size: 22px;">Passo-a-Passo</h2>
+          <p class="item-text-wrap padding">{{selectedRecipe.directions}}</p>
         </div>
       </div>
 
     </ion-content>
 
     <div class="bar bar-footer bar-stable">
-      <textarea placeholder="Say Something..." style="font-size: 15px; margin-top:0px !important;" ng-model="recipe.comments" rows="1"></textarea>
+      <textarea placeholder="Escreva algo..." style="font-size: 15px; margin-top:0px !important;" ng-model="recipe.comments" rows="1"></textarea>
       <button class="button button-clear icon-left ion-android-send" ng-click=""></button>
     </div>
 

@@ -5,43 +5,33 @@
         <input type="search" ng-model="searchUser" ng-change="findUsers(searchUser)" placeholder="Search">
       </label>
       <button class="button button-clear button-dark" ng-click="closeModal('users')">
-        Cancel
+        Fechar
       </button><br>
     </div>
 
-    <ion-content class="has-header" style="background: white !important;">
-      <div class="list-card" ng-repeat="test in users">
+<!--     <ion-content class="has-header" style="background: white !important;">
+      <div class="list-card" ng-repeat="test in tests">
         <a class="item item-avatar" href="#">
-          <img ng-src="{{users.profilePhoto ? users.profilePhoto : 'img/no-photo.png'}}" style="object-fit: cover; object-position: center;">
-          <h2>{{users.displayName || 'Usuário sem Nome'}}</h2>
-          <p> {{users.length}} valores</p>
+          <img ng-src="{{test.profilePhoto ? test.profilePhoto : 'img/no-photo.png'}}" style="object-fit: cover; object-position: center;">
+          <h2>{{test.id || 'Usuário sem Nome'}}</h2>
+          <p> {{test.length}} valores</p>
           <p>{{test.displayDescription || ''}}</p>
         </a>
         <button class="button button-positive btnFollow" ng-click=""> <h6>SEGUIR</h6> </button>
       </div>
       
-    </ion-content>
+    </ion-content> -->
 
-<<<<<<< HEAD
-<!--     <ion-content class="has-header" style="background: white !important;">
-      <div class="list-card" ng-repeat="users in allUsers" ng-click="tapName(Users.user)">
-        <a class="item item-avatar" href="#">
-          <img ng-src="{{users.ProfilePhoto ? users.ProfilePhoto : 'img/no-photo.png'}}" style="object-fit: cover; object-position: center;">
-          <h2>{{users.name || 'Usuário sem Nome'}}</h2>
-          <p>{{users.displayDescription || ''}}</p>
-          <p> {{users.length}} usuários encontrados</p>     
-=======
     <ion-content class="has-header" style="background: white !important;">
-      <p> {{usersFold.length}} usuários encontrados</p>
+      <p style="padding: 15px; color: green;"> {{usersFold.length}} usuários encontrados</p>
       <div class="list-card" ng-if="singleUser.$id != user.$id" ng-repeat="singleUser in usersFold">
         <a class="item item-avatar" href="#">
           <img ng-src="{{singleUser.profilePhoto ? singleUser.profilePhoto : 'img/no-photo.png'}}" style="object-fit: cover; object-position: center;">
           <h2>{{singleUser.name || 'Usuário sem Nome'}}</h2>
           <p>{{singleUser.description || ''}}</p>
->>>>>>> f6c08c067d304efb8f3fe1e99dba7a86a648ee96
         </a>
-        <button class="button button-positive btnFollow" ng-click="follow(singleUser.$id)"> <h6>{{(user.following && user.following.indexOf(singleUser.$id)!== -1 ? 'Unfollow' : 'Follow')}}</h6> </button>
+        <button class="button button-positive btnFollow" ng-class="{buttonActive: buttonState == true}" ng-click="follow(singleUser.$id); buttonState = !buttonState"> <h6>{{(user.following && user.following.indexOf(singleUser.$id)!== -1 ? 'Unfollow' : 'Follow')}}</h6> </button>
       </div>
-    </ion-content> -->
+    </ion-content>
 
  </ion-modal-view>

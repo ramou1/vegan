@@ -1,23 +1,24 @@
 <ion-modal-view class="scroll">
     <ion-header-bar class="bar-light">
       <!-- <h1 class="title">{{title}}</h1> -->
-       <button class="button ion-close button-clear button-dark" ng-click="closeModal()"> Cancel</button>
+       <button class="button ion-close button-clear button-dark" ng-click="closeModal()"> Cancelar</button>
     </ion-header-bar>
 
     <ion-content style="background: white !important;">
-      <div class="list text-center">
-        <label class="item item-input">
-          <textarea placeholder="Say Something..." ng-model="post.description" rows="5" cols="1"></textarea>
-        </label>
-        <img  class="modalImg" ng-if="post.image" ng-src="{{post.image}}">
-      </div>
+      <form name="myForm" novalidate>
+        <div class="list text-center">
+          <label class="item item-input">
+            <textarea placeholder="Escreva algo..." ng-model="post.description" rows="5" cols="1" required></textarea>
+          </label>
+          <img class="modalImg" ng-if="post.image" ng-src="{{post.image}}">
+        </div>
 
     </ion-content>
 
       <div class="bar bar-footer bar-light">
         <button class="button button-clear icon-left ion-image" ng-click="choosePhoto('posts')"></button>
         <button class="button button-clear icon-left ion-camera" ng-click="takePhoto('posts')"></button>
-        <button class="button button-outline button-positive" ng-click="newPost()">New Post</button>
+        <button class="button button-outline button-positive" ng-disabled="myForm.$invalid" ng-click="newPost()">Criar Post</button>
       </div>
-
+      </form>
  </ion-modal-view>

@@ -1,7 +1,7 @@
 <ion-modal-view class="scroll">
     <ion-header-bar class="bar-light">
       <!-- <h1 class="title">{{title}}</h1> -->
-       <button class="button ion-arrow-left-c button-clear button-dark" ng-click="closeModal('settings')"> Back</button>
+       <button class="button ion-arrow-left-c button-clear button-dark" ng-click="closeModal('settings')"> Voltar</button>
        <button class="button button-outline button-positive" ng-click="saveUser()">Save</button>
     </ion-header-bar>
     
@@ -11,36 +11,36 @@
     <div class="list">
 
     <div class="item item-divider" style="text-align: center; background-color: #e8e8e8">
-      My Profile
+      Meu Perfil
     </div>
 
     <label class="item item-input">
-      <input type="text" placeholder="Name" ng-model="user.name" style="font-size: 15px !important;">
+      <input type="text" placeholder="Nome" ng-model="user.name" style="font-size: 15px !important;">
     </label>
 
     <label class="item item-input">
-      <textarea placeholder="Description" ng-model="user.description" rows="3" style="font-size: 15px !important;"></textarea>
+      <textarea placeholder="Descrição" ng-model="user.description" rows="3" style="font-size: 15px !important;"></textarea>
     </label>
 
     <div class="item item-divider" style="margin-top: 10px; text-align: center; background-color: #e8e8e8;">
-      Profile Image
+      Foto de Perfil
     </div>
 
     <a class="item item-icon-left" ng-click="choosePhoto('userProfilePhoto')">
       <i class="icon ion-image" ></i>
-      Choose Photo
+      Escolher Foto
     </a>
 
     <a class="item item-icon-left" ng-click="takePhoto('userProfilePhoto')">
       <i class="icon ion-camera" ></i>
-      Take Photo
+      Tirar Foto
     </a>
     <a class="item" href="#">
-      Terms of Use
+      Termos de Uso
     </a>
     
     <a class="item" ng-click="logout()">
-      Exit
+      Sair
     </a>
 
     </div>
