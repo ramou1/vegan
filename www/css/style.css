@@ -9,6 +9,7 @@
 /*#floating-button {
     margin-bottom: 40px;
 }*/
+.scroll,ui-gmap-google-map, .angular-google-map, .angular-google-map-container { height: 100%; }
 table {
   margin-left: 60px;
   font-size: 12px;

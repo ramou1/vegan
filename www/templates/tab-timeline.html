@@ -10,7 +10,7 @@
   <div class="list card text-center" ng-if="!followingPosts.length">
     <h4>Não há posts para exibir</h4>
   </div>
-  <div class="list card" ng-repeat="post in followingPosts | orderBy: 'postDate'">
+  <div class="list card" ng-repeat="post in followingPosts | orderBy: -'postDate'">
     <div class="item item-avatar">
       <img ng-src="{{post.profilePhoto ? post.profilePhoto : 'img/no-photo.png'}}" style="object-fit: cover; object-position: center;">
       <!-- <button class="button ion-android-more-vertical button-clear button-dark" style="margin: -9% 0 -20% 70%;" ng-click=""></button> -->

@@ -3,10 +3,10 @@
    	Restaurantes
    </ion-nav-title>
    <ion-content>
+   	<ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options" bounds="map.bounds">
+        <ui-gmap-markers models="randomMarkers" coords="'self'" icon="'icon'">
+        </ui-gmap-markers>
+    </ui-gmap-google-map>
    </ion-content>
- <!--  <ion-content data-tap-disabled="true">
-    
-        <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
-        
-      </ion-content> -->
+
 </ion-view>

@@ -52,8 +52,8 @@
               if(dataPost){
                 return UserFirebase.userProfileDatabase(value).$loaded(function(dataUser){
                     dataPost.map(function(value, key){
-                      if(dataUser["name"]) value["name"] = dataUser["name"];
-                      if(dataUser["profilePhoto"]) value["profilePhoto"] = dataUser["profilePhoto"];
+                      if(dataUser.$getRecord("name")) value["name"] =dataUser.$getRecord("name").$value;
+                      if(dataUser.$getRecord("profilePhoto")) value["profilePhoto"] = dataUser.$getRecord("profilePhoto").$value;
                       $scope.followingPosts.push(value);
                     })
                 })
@@ -94,6 +94,9 @@
 
 
    .controller('RecipesCtrl', function($scope,currentAuth,  $ionicLoading, $rootScope, $ionicModal, $cordovaCamera, $state, $timeout, UserFirebase, $firebaseObject, $ionicPopup) {
+      $scope.recipesModal = '';
+      $scope.selectedRecipe = {};
+      $scope.singleRecipeModal = '';
       $scope.doRefresh = function() {
         $scope.followingRecipes = [];
         if($rootScope.currentUser.following){
@@ -142,11 +145,27 @@
       }else{
         $scope.doRefresh();
       }
+      $ionicModal.fromTemplateUrl('templates/single-recipe.html', {
+         scope: $scope,
+         animation: 'slide-in-up'
+      }).then(function(modal) {
+         $scope.singleRecipeModal = modal;
+      });
+      $scope.openRecipe = function(single) {
+        $scope.selectedRecipe = single;
+        $scope.singleRecipeModal.show();
+      };
+      $scope.closeModal = function(single) {
+          $scope.selectedRecipe = {};
+          $scope.singleRecipeModal.hide();
+      };
+      $scope.$on('$destroy', function() {
+         $scope.recipesModal.remove();
+      });
    })
 
    .controller('ProfileCtrl', function(Auth, $scope, $ionicModal, $ionicLoading, currentAuth, $cordovaCamera, $state, $timeout, UserFirebase, $firebaseObject, $ionicPopup, $stateParams) {
       $scope.usersToFollow = [];
-      console.log("here");
       $timeout(function(){
          if(!currentAuth){
             console.log("here");
@@ -638,9 +657,29 @@
       });
    })
    .controller('EventsCtrl', function($scope, $ionicLoading, $rootScope,currentAuth, $ionicModal, $cordovaCamera, $state, $timeout, UserFirebase, $firebaseObject, $ionicPopup) {
+      $scope.singleEventModal = '';
+      $scope.selectedEvent = '';
+      $ionicModal.fromTemplateUrl('templates/single-event.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function(modal) {
+        $scope.singleEventModal = modal;
+      });
+      $scope.openEvent = function(single) {
 
+            $scope.selectedEvent = single;
+            $scope.singleEventModal.show();
 
-     
+      };
+      $scope.closeModal = function(single) {
+
+        $scope.singleEventModal.hide();
+      };
+
+      // Cleanup the modal when we're done with it!
+      $scope.$on('$destroy', function() {
+         $scope.singleEventModal.remove();
+      });
       $scope.doRefresh = function() {
         $scope.followingEvents = [];
         if($rootScope.currentUser.following){
@@ -692,7 +731,51 @@
    })
 
    .controller('RestaurantsCtrl', function($scope, $ionicLoading) {
-      // $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+        $scope.map = {
+        center: { 
+          latitude: -23.162932,
+          longitude: -45.863025
+        },
+        zoom: 10,
+        bounds: {
+          northeast: { 
+            latitude: -23.085892,
+            longitude: -45.827320
+          },
+          southwest: {
+            latitude: -23.292916,
+            longitude: -45.898731
+          }
+        }
+      };
+      $scope.options = {
+        scrollwheel: false
+      };
+      var createRandomMarker = function(i, bounds, idKey) {
+        var lat_min = bounds.southwest.latitude,
+          lat_range = bounds.northeast.latitude - lat_min,
+          lng_min = bounds.southwest.longitude,
+          lng_range = bounds.northeast.longitude - lng_min;
+
+        if (idKey == null) {
+          idKey = "id";
+        }
+
+        var latitude = lat_min + (Math.random() * lat_range);
+        var longitude = lng_min + (Math.random() * lng_range);
+        var ret = {
+          latitude: latitude,
+          longitude: longitude,
+          title: 'm' + i
+        };
+        ret[idKey] = i;
+        return ret;
+      };
+      var markers = [];
+      for (var i = 0; i <20; i++) {
+        markers.push(createRandomMarker(i, $scope.map.bounds))
+      }
+      $scope.randomMarkers = markers;
     });
 
 
