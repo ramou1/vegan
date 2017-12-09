@@ -10,13 +10,12 @@
         <p class="padding valida" ng-show="myForm.username.$error.required">* Insira o nome</p>
 
         <label class="item item-input">
-          <input type="text" placeholder="E-mail" name="email" ng-model="user.email" required style="font-size: 15px !important;">
+          <input type="email" placeholder="E-mail" name="email" ng-model="user.email" required style="font-size: 15px !important;">
         </label>
         <p class="padding valida" ng-show="myForm.email.$error.required">* Insira o e-mail</p>
 
         <label class="item item-input">
-          <input type="text" placeholder="Senha" name="password" ng-model="user.password" ng-minlength="6" required style="font-size: 15px !important;">
-          <!-- <input ng-model="newUser.firstName" type="text"> -->
+          <input type="password" placeholder="Senha" name="password" ng-model="user.password" ng-minlength="6" required style="font-size: 15px !important;">
         </label>
         <p class="padding valida" ng-show="myForm.password.$error.required">* Insira a senha</p>
         <p class="padding valida" ng-show="myForm.password.$error.minlength">* A senha deve possuir mais de 5 caracteres</p>

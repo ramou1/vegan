@@ -736,7 +736,7 @@
           latitude: -23.162932,
           longitude: -45.863025
         },
-        zoom: 10,
+        zoom: 12,
         bounds: {
           northeast: { 
             latitude: -23.085892,
@@ -772,7 +772,7 @@
         return ret;
       };
       var markers = [];
-      for (var i = 0; i <20; i++) {
+      for (var i = 0; i <7; i++) {
         markers.push(createRandomMarker(i, $scope.map.bounds))
       }
       $scope.randomMarkers = markers;
